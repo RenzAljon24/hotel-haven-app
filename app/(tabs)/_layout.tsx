@@ -1,37 +1,31 @@
+import { View, Image } from 'react-native';
 import { Tabs } from 'expo-router';
-import React from 'react';
+import { images } from '@/constants';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Custom header component
+const CustomHeader = () => (
+  <View className="flex-1 justify-center items-center">
+    <Image 
+      source={images.logo} 
+      className="w-24 h-10 object-contain" // Adjust width and height as needed
+    />
+  </View>
+);
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const _layout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
+        headerTitle: () => <CustomHeader />,
+        headerStyle: {
+          backgroundColor: 'transparent', // Optional: Make header background transparent
+        },
+        headerTitleAlign: 'center', // Center align the title
+      }}
+    >
+      <Tabs.Screen name='index' options={{ title: 'Home' }} />
     </Tabs>
   );
-}
+};
+
+export default _layout;

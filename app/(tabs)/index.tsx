@@ -1,70 +1,73 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useState, useEffect } from 'react';
+import axiosConfig from '@/helpers/axiosConfig'
+import { RootStackParamList } from '@/types/ParamList';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+interface Room {
+  id: number;
+  name: string;
+  image: string;
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+const RoomList = () => {
+
+
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    getAllRooms();
+  }, []);
+
+  const getAllRooms = () => {
+    setIsLoading(true);
+    axiosConfig
+      .get<Room[]>('/rooms')
+      .then((response) => {
+        setRooms(response.data);
+       
+      })
+      .catch((error) => {
+        console.log(error);
+      }).finally(() => {
+        setIsLoading(false);
+      })
+  };
+
+  if (isLoading) {
+    return <ActivityIndicator className='mt-20' size="large" color="gray" />;
+  }
+
+  const handlePress = (id: number) => {
+    navigation.navigate('RoomDetails', { id });
+  };
+
+  const renderItem = ({ item }: { item: Room }) => (
+    <TouchableOpacity onPress={() => handlePress(item.id)} className="mb-4 p-4 border-b border-gray-300">
+      <Image 
+        source={{ uri: item.image }} 
+        className="w-full h-48 rounded-2xl"
+      />
+      <Text className="text-lg font-bold mt-2">{item.name}</Text>
+    </TouchableOpacity>
+  );
+
+  return (
+      <View className="flex-1 px-4 ">
+        <FlatList
+        className='mt-5'
+          showsVerticalScrollIndicator={false}
+          data={rooms}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+
+        />
+      </View>
+  );
+};
+
+export default RoomList;
