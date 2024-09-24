@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import '../global.css';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
+import { AuthProvider } from '@/context/AuthContext';
 import { ActivityIndicator } from 'react-native';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -43,11 +43,16 @@ export default function RootLayout() {
 
   return (
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="Login" options={{ headerShown: false }} />
-          <Stack.Screen name="RoomDetails" options={{ headerShown: false }} />
-        </Stack>
+        <AuthProvider>
+          <Stack>
+            <Stack.Screen name="LandingPage" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(rooms_screens)" options={{ headerShown: false }} />
+            <Stack.Screen name="RoomDetails" options={{ headerShown: false }} />
+            <Stack.Screen name="Reservation" options={{ headerTitle: "", headerBlurEffect: 'regular', headerTransparent: true}} />
+          </Stack>
+        </AuthProvider>
       </GestureHandlerRootView>
   );
 }

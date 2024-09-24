@@ -21,3 +21,19 @@ declare interface ButtonProps extends TouchableOpacityProps {
     iconStyle?: string;
     className?: string;
   }
+
+
+  export interface Room {
+    id: number;
+    room_number: number;
+    type: string;
+    availability: number;
+    image: string;
+    description: string; 
+    price: number;
+  }
+  
+  export type RootStackParamList = {
+    RoomDetails: { id: number };
+    Reservation: { roomId: number};
+  };

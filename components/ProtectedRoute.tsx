@@ -3,19 +3,26 @@ import { View, Text } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'expo-router';
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
+interface ProtectedRouteProps {
+  children: React.ReactNode; 
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user } = useAuth();
   const router = useRouter();
 
-  // If user is not authenticated, show a message or redirect
-  if (!user) {
-    router.push('/Login');
-    return (
-      <View>
-        <Text>Redirecting to login...</Text>
-      </View>
-    );
-  }
+  React.useEffect(() => {
+    if (user === null) {
+      // Redirect to login page if not authenticated
+      router.push('/LandingPage');
+    }
+    if(!user) {
+      router.push('/LandingPage')
+    }
+  }, [user, router]);
 
-  return <>{children}</>;
-}
+
+  return <>{children}</>; // Render children if user is authenticated
+};
+
+export default ProtectedRoute;

@@ -1,6 +1,8 @@
 import { View, Image } from 'react-native';
 import { Tabs } from 'expo-router';
 import { images } from '@/constants';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 // Custom header component
 const CustomHeader = () => (
@@ -14,17 +16,24 @@ const CustomHeader = () => (
 
 const _layout = () => {
   return (
+
     <Tabs
       screenOptions={{
+        tabBarActiveTintColor: "#15A86D",
         headerTitle: () => <CustomHeader />,
         headerStyle: {
-          backgroundColor: 'transparent', // Optional: Make header background transparent
+          backgroundColor: 'transparent', 
         },
         headerTitleAlign: 'center', // Center align the title
+        tabBarShowLabel: false,
+
       }}
     >
-      <Tabs.Screen name='index' options={{ title: 'Home' }} />
+      <Tabs.Screen name='index' options={{ tabBarIcon: ({color}) => <MaterialCommunityIcons name="home" size={38} color={color} /> }} />
+
+      <Tabs.Screen name='profile' options={{ tabBarIcon: ({color}) => <MaterialIcons name="manage-accounts" size={38} color={color} />}} />
     </Tabs>
+
   );
 };
 
