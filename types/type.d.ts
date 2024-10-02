@@ -30,7 +30,7 @@ declare interface ButtonProps extends TouchableOpacityProps {
     availability: number;
     image: string;
     description: string; 
-    price: number;
+    price: any;
   }
   
   export type RootStackParamList = {

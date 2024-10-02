@@ -78,7 +78,7 @@ const HomePage = () => {
                         <View className='flex flex-col ml-3'>
                           <Text className='font-bold text-xl pt-3'>Welcome Back,</Text>
                           <Text className="font-bold text-xl pt-1">
-                              {user.first_name} {user.last_name}!
+                              {user.firstName} {user.lastName}!
                           </Text>
                         </View>
                     </View>

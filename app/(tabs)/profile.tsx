@@ -24,7 +24,7 @@ const Profile = () => {
                             className="w-40 h-40 rounded-full"
                         />
                         <Text className="font-bold text-2xl pt-2">
-                            {user.first_name} {user.last_name}
+                            {user.firstName} {user.lastName}
                         </Text>
                     </>
                 ) : (

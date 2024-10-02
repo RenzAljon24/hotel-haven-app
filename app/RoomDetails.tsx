@@ -75,12 +75,15 @@ const RoomDetails = () => {
               <Text className='text-center text-white font-pbold mt-10 p-4 bg-[#15A86D] mx-20 rounded-3xl'>BOOK NOW</Text>
             </TouchableOpacity>
 
-            <Text className='p-4 mt-10 text-xl font-pbold'>
-              Description:  
-              <Text className='text-gray-500 font-pregular text-base'>
+            <View className='flex flex-col mt-10'>
+              <Text className='p-4 mt-10 text-xl font-pbold'>
+                Description:
+              </Text>
+              <Text className='p-4 text-gray-500 font-pregular text-base'>
                 {room.description}
               </Text>
-            </Text>
+            </View>
+
           </View>
         </ScrollView>
       </View>

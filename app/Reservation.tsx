@@ -1,139 +1,154 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Alert, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import axiosConfig from "@/helpers/axiosConfig";
-import { Room, RootStackParamList } from '@/types/type'; // Ensure this imports correctly
+import axiosConfig from '@/helpers/axiosConfig';
+import { Room, RootStackParamList } from '@/types/type';
 import { useAuth } from '@/context/AuthContext';
+import CustomCalendarPicker from '@/components/CustomDatePicker'; // Adjust the path as needed
 
 const Reservation = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Reservation'>>();
   const { roomId } = route.params;
-
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
-  const [checkIn, setCheckIn] = useState(new Date());
-  const [checkOut, setCheckOut] = useState(new Date());
-  const [showCheckInPicker, setShowCheckInPicker] = useState(false);
-  const [showCheckOutPicker, setShowCheckOutPicker] = useState(false);
-  const [totalPrice, setTotalPrice] = useState<number | null>(null); // State to store total price
+  const [checkInDate, setCheckInDate] = useState<Date | null>(null);
+  const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+  const [totalPrice, setTotalPrice] = useState<number | null>(null);
+  const [bookedDates, setBookedDates] = useState<{ start: Date, end: Date }[]>([]);
   const { makeReservation } = useAuth();
 
-  // Fetch room details based on roomId
-  useEffect(() => {
-    const fetchRoomDetails = async () => {
-      try {
-        const response = await axiosConfig.get<Room>(`/rooms/${roomId}`);
-        setRoom(response.data);
-      } catch (error) {
-        console.error(error);
-        Alert.alert('Error', 'Unable to fetch room details');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchRoomDetails = async () => {
+    setLoading(true);
+    try {
+      // Fetch room details
+      const roomResponse = await axiosConfig.get<Room>(`/rooms/${roomId}`);
+      console.log('Room API Response:', roomResponse.data);
+      setRoom(roomResponse.data);
 
-    fetchRoomDetails();
-  }, [roomId]);
+      // Fetch booked dates
+      const bookedDatesResponse = await axiosConfig.get<{ check_in: string, check_out: string }[]>(`/rooms/${roomId}/booked-dates`);
+      console.log('Booked Dates API Response:', bookedDatesResponse.data);
+      setBookedDates(bookedDatesResponse.data.map(booking => ({
+        start: new Date(booking.check_in),
+        end: new Date(booking.check_out),
+      })));
+    } catch (error) {
+      console.error('Fetch Room or Booked Dates Error:', error);
+      Alert.alert('Error', 'Unable to fetch room details or booked dates');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Function to calculate total price based on selected check-in and check-out dates
   const calculateTotalPrice = (checkIn: Date, checkOut: Date) => {
     if (room) {
       const numberOfNights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 3600 * 24));
-      const total = numberOfNights * room.price;
-      setTotalPrice(total);
+      setTotalPrice(numberOfNights * parseFloat(room.price));
     }
   };
 
-  const onCheckInChange = (event: any, selectedDate: Date | undefined) => {
-    setShowCheckInPicker(false);
-    if (selectedDate) {
-      setCheckIn(selectedDate);
-      calculateTotalPrice(selectedDate, checkOut); // Calculate total when check-in date changes
+  const handleCheckInChange = (date: Date) => {
+    setCheckInDate(date);
+    if (checkOutDate && date > checkOutDate) {
+      setCheckOutDate(null);
+    }
+    if (date && checkOutDate) {
+      calculateTotalPrice(date, checkOutDate);
     }
   };
 
-  const onCheckOutChange = (event: any, selectedDate: Date | undefined) => {
-    setShowCheckOutPicker(false);
-    if (selectedDate) {
-      setCheckOut(selectedDate);
-      calculateTotalPrice(checkIn, selectedDate); // Calculate total when check-out date changes
+  const handleCheckOutChange = (date: Date) => {
+    setCheckOutDate(date);
+    if (checkInDate) {
+      calculateTotalPrice(checkInDate, date);
     }
   };
 
-  // Handle room booking
   const handleBooking = async () => {
-    if (!room || totalPrice === null) {
-      Alert.alert('Error', 'Room details or total price are not available');
+    if (!room || !checkInDate || !checkOutDate || totalPrice === null) {
+      Alert.alert('Error', 'Please fill all the required fields.');
       return;
     }
-
     try {
-      await makeReservation(room.id, totalPrice, checkIn.toISOString().split('T')[0], checkOut.toISOString().split('T')[0]);
+      await makeReservation(room.id, totalPrice, checkInDate.toISOString().split('T')[0], checkOutDate.toISOString().split('T')[0]);
       Alert.alert('Success', 'Room booked successfully!');
+
+      // Update booked dates locally after successful reservation
+      setBookedDates([...bookedDates, { start: checkInDate!, end: checkOutDate! }]);
+
+      // Reset fields
+      setCheckInDate(null);
+      setCheckOutDate(null);
+      setTotalPrice(null);
     } catch (error) {
-      console.error(error);
+      console.error('Make Reservation Error:', error);
       Alert.alert('Error', 'Unable to make the reservation');
     }
   };
+
+  useEffect(() => {
+    fetchRoomDetails();
+  }, [roomId]);
 
   if (loading) {
     return <ActivityIndicator className='mt-24 text-4xl' size="large" color="#0000ff" />;
   }
 
   if (!room) {
+    console.log('No room data found');
     return <Text>No room found</Text>;
   }
 
   return (
-    <View className="flex-1">
-      
-      <Image 
-      source={{uri:room.image}}
-      className='w-full h-1/2'
-      />
-      <Text className="text-lg text-right font-pregular m-2">Price per Night: <Text className='font-pbold'>₱{room.price}</Text></Text>
-      <Text className="text-xl font-bold">Room Reservation</Text>
-      <Text className="text-lg">Room Number: {room.room_number}</Text>
-      <Text className="text-lg">Type: {room.type}</Text>
-     
-      <View className='flex flex-row gap-5 text-center items-center justify-center mt-10'>
-        {/* Check-In Date Picker */}
-        <TouchableOpacity  onPress={() => setShowCheckInPicker(true)}  ><Text className='border w-44 p-2 font-pmedium'>Select Check-In Date</Text></TouchableOpacity>
-        {showCheckInPicker && (
-          <DateTimePicker
-            value={checkIn}
-            mode="date"
-            display="default"
-            onChange={onCheckInChange}
-            minimumDate={new Date()} // Prevent past dates
-          />
-        )}
-        
+      <View className="flex-1">
+        <StatusBar barStyle={'dark-content'} />
 
-        {/* Check-Out Date Picker */}
-        <TouchableOpacity  onPress={() => setShowCheckInPicker(true)}  ><Text className='border w-44 p-2 font-pmedium'>Select Check-Out Date</Text></TouchableOpacity>
-        {showCheckOutPicker && (
-          <DateTimePicker
-            value={checkOut}
-            mode="date"
-            display="default"
-            onChange={onCheckOutChange}
-            minimumDate={checkIn} // Prevent check-out before check-in
+        <View className="flex flex-row items-center justify-center mt-10 gap-5">
+          <Image source={{ uri: room.image }} className="mt-20 ml-4 w-44 h-44 rounded-2xl" alt="Room Image"/>
+          <View className="ml-6">
+            <Text className="text-lg font-bold">Room Number: {room.room_number}</Text>
+            <Text className="text-lg font-bold">Type: {room.type}</Text>
+          </View>
+        </View>
+
+
+        <View className="flex flex-row items-center justify-center mt-10 ">
+          <Text className="text-base p-2">
+            {checkInDate ? checkInDate.toLocaleDateString() : ""}
+          </Text>
+          <Text className="text-base p-2">
+            {checkOutDate ? checkOutDate.toLocaleDateString() : ""}
+          </Text>
+        </View>
+
+        <View className="flex flex-row items-center justify-center">
+          <CustomCalendarPicker
+              label="Check-In"
+              selectedDate={checkInDate}
+              bookedDates={bookedDates}
+              onDateChange={handleCheckInChange}
+              minimumDate={new Date()}
           />
-        )}
-       
+          <CustomCalendarPicker
+              label="Check-Out"
+              selectedDate={checkOutDate}
+              bookedDates={bookedDates}
+              onDateChange={handleCheckOutChange}
+              minimumDate={checkInDate || new Date()}
+          />
+        </View>
+
+
+        <View className="absolute bottom-0 w-full p-4 bg-white border-t border-gray-200">
+          <Text className="text-base text-gray-500">Total Payable amount</Text>
+          <View className="flex flex-row justify-between items-center mx-10 mt-2">
+            <Text className="text-lg text-[#15A86D] font-bold">₱{totalPrice?.toFixed(2) ?? ''}</Text>
+            <TouchableOpacity onPress={handleBooking} >
+              <Text className="text-white text-center font-bold bg-[#15A86D] p-3 rounded-3xl w-48">Pay Now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
-      <Text className='font-pregular mx-10 mt-3'>Check-Out: {checkOut.toLocaleDateString()}</Text>
-      <Text className='font-pregular mx-10'>Check-In: {checkIn.toLocaleDateString()}</Text>
-
-      {/* Display the total price */}
-      <Text className="text-lg mt-4 font-bold mx-10">Total Price: ₱{totalPrice}</Text>
-
-      <TouchableOpacity  onPress={handleBooking} >
-        <Text className='bg-[#15A86D] text-white text-center font-pbold mx-10 p-3 rounded-2xl mt-10'>Confirm Booking</Text>
-      </TouchableOpacity>
-    </View>
   );
 };
 
