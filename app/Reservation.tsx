@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, ActivityIndicator, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, Image, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import axiosConfig from '@/helpers/axiosConfig';
 import { Room, RootStackParamList } from '@/types/type';
@@ -20,20 +20,15 @@ const Reservation = () => {
   const fetchRoomDetails = async () => {
     setLoading(true);
     try {
-      // Fetch room details
       const roomResponse = await axiosConfig.get<Room>(`/rooms/${roomId}`);
-      console.log('Room API Response:', roomResponse.data);
       setRoom(roomResponse.data);
 
-      // Fetch booked dates
       const bookedDatesResponse = await axiosConfig.get<{ check_in: string, check_out: string }[]>(`/rooms/${roomId}/booked-dates`);
-      console.log('Booked Dates API Response:', bookedDatesResponse.data);
       setBookedDates(bookedDatesResponse.data.map(booking => ({
         start: new Date(booking.check_in),
         end: new Date(booking.check_out),
       })));
     } catch (error) {
-      console.error('Fetch Room or Booked Dates Error:', error);
       Alert.alert('Error', 'Unable to fetch room details or booked dates');
     } finally {
       setLoading(false);
@@ -72,16 +67,11 @@ const Reservation = () => {
     try {
       await makeReservation(room.id, totalPrice, checkInDate.toISOString().split('T')[0], checkOutDate.toISOString().split('T')[0]);
       Alert.alert('Success', 'Room booked successfully!');
-
-      // Update booked dates locally after successful reservation
       setBookedDates([...bookedDates, { start: checkInDate!, end: checkOutDate! }]);
-
-      // Reset fields
       setCheckInDate(null);
       setCheckOutDate(null);
       setTotalPrice(null);
     } catch (error) {
-      console.error('Make Reservation Error:', error);
       Alert.alert('Error', 'Unable to make the reservation');
     }
   };
@@ -91,64 +81,89 @@ const Reservation = () => {
   }, [roomId]);
 
   if (loading) {
-    return <ActivityIndicator className='mt-24 text-4xl' size="large" color="#0000ff" />;
+    return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
   if (!room) {
-    console.log('No room data found');
     return <Text>No room found</Text>;
   }
 
   return (
-      <View className="flex-1">
-        <StatusBar barStyle={'dark-content'} />
+    <ScrollView className="flex-1">
+      <StatusBar barStyle={'dark-content'} />
 
-        <View className="flex flex-row items-center justify-center mt-10 gap-5">
-          <Image source={{ uri: room.image }} className="mt-20 ml-4 w-44 h-44 rounded-2xl" alt="Room Image"/>
-          <View className="ml-6">
-            <Text className="text-lg font-bold">Room Number: {room.room_number}</Text>
-            <Text className="text-lg font-bold">Type: {room.type}</Text>
-          </View>
-        </View>
-
-
-        <View className="flex flex-row items-center justify-center mt-10 ">
-          <Text className="text-base p-2">
-            {checkInDate ? checkInDate.toLocaleDateString() : ""}
-          </Text>
-          <Text className="text-base p-2">
-            {checkOutDate ? checkOutDate.toLocaleDateString() : ""}
-          </Text>
-        </View>
-
-        <View className="flex flex-row items-center justify-center">
-          <CustomCalendarPicker
-              label="Check-In"
-              selectedDate={checkInDate}
-              bookedDates={bookedDates}
-              onDateChange={handleCheckInChange}
-              minimumDate={new Date()}
-          />
-          <CustomCalendarPicker
-              label="Check-Out"
-              selectedDate={checkOutDate}
-              bookedDates={bookedDates}
-              onDateChange={handleCheckOutChange}
-              minimumDate={checkInDate || new Date()}
-          />
-        </View>
-
-
-        <View className="absolute bottom-0 w-full p-4 bg-white border-t border-gray-200">
-          <Text className="text-base text-gray-500">Total Payable amount</Text>
-          <View className="flex flex-row justify-between items-center mx-10 mt-2">
-            <Text className="text-lg text-[#15A86D] font-bold">₱{totalPrice?.toFixed(2) ?? ''}</Text>
-            <TouchableOpacity onPress={handleBooking} >
-              <Text className="text-white text-center font-bold bg-[#15A86D] p-3 rounded-3xl w-48">Pay Now</Text>
-            </TouchableOpacity>
-          </View>
+      <View className="flex flex-row items-center justify-center mt-10 gap-5">
+        <Image source={{ uri: room.image }} className="mt-20 ml-4 w-44 h-44 rounded-2xl" />
+        <View className="ml-6">
+          <Text className="text-lg font-bold">Room Number: {room.room_number}</Text>
+          <Text className="text-lg font-bold">Type: {room.type}</Text>
         </View>
       </View>
+
+      <View className="flex flex-row mx-7 mt-10 ">
+        <Text className="text-base font-pregular text-[#15A86D] px-5">
+          {checkInDate ? checkInDate.toLocaleDateString() : ""}
+        </Text>
+        <Text className="text-base font-pregular text-[#15A86D] px-5">
+          {checkOutDate ? checkOutDate.toLocaleDateString() : ""}
+        </Text>
+        <Text className='text-base font-pregular text-[#15A86D] px-5'>
+        {checkOutDate ? '1 Room/s' : ""}
+        </Text>
+      </View>
+
+      <View className="flex flex-row mx-7 ">
+        <CustomCalendarPicker
+          label="Check-In"
+          selectedDate={checkInDate}
+          bookedDates={bookedDates}
+          onDateChange={handleCheckInChange}
+          minimumDate={new Date()}
+        />
+        <CustomCalendarPicker
+          label="Check-Out"
+          selectedDate={checkOutDate}
+          bookedDates={bookedDates}
+          onDateChange={handleCheckOutChange}
+          minimumDate={checkInDate || new Date()}
+        />
+        <Text className='text-xl font-pregular text-gray-600 ml-2'>2 Guest(s)</Text>
+      </View>
+
+        {/* Amenities Section */}
+      <View className="mt-10 p-4">
+          <Text className="text-lg font-pbold mb-4">Additional Amenities/Facilities</Text>
+          <View>
+            {[
+              'Cable TV',
+              'Hot and cold shower',
+              'Bedside Table',
+              'Refrigerator',
+              'Wardrobe',
+              'Comfortable beds',
+              'Vanity Kits',
+              '24 hours front desk',
+              'Luggage Storage',
+            ].map((amenity, index) => (
+              <Text key={index} className="text-base text-gray-600 mb-3 font-pmedium">- {amenity}</Text>
+            ))}
+          </View>
+      </View>
+
+      <View className="relative bottom-0 w-full p-4 ">
+        <Text className="text-base text-gray-500">Total Payable amount</Text>
+        <View className="flex flex-row justify-between items-center mx-10 mt-2">
+          <Text className="text-lg text-[#15A86D] font-bold">₱{totalPrice?.toFixed(2) ?? ''}</Text>
+          <TouchableOpacity onPress={handleBooking}>
+            <View className="bg-[#15A86D] p-3 rounded-3xl w-48">
+              <Text className="text-white text-center font-bold">Pay Now</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+
+    </ScrollView>
   );
 };
 
