@@ -43,7 +43,7 @@ const RoomDetails = () => {
   }
 
   const handlePress = () => {
-    navigation.navigate('Reservation', { roomId: room.id }); // Ensure room.id is passed
+    navigation.navigate('Reservation', { roomId: room.id });
   };
 
   return (

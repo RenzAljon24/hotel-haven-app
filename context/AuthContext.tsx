@@ -47,13 +47,13 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
 
     const handleRequestError = (error: any) => {
         if (error.response) {
-            console.error('Error response:', error.response.data);
-            setError(error.response.data.message || 'An error occurred. Please try again.');
+            console.log('Error response:', error?.response.data.message);
+            setError(error?.response.data.message || 'An error occurred. Please try again.');
         } else if (error.request) {
-            console.error('Error request:', error.request);
+            console.log('Error request:', error.request);
             setError('No response received from the server. Please try again.');
         } else {
-            console.error('Error message:', error.message);
+            console.log('Error message:', error.message);
             setError('An unexpected error occurred. Please try again.');
         }
     };
@@ -67,9 +67,9 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         setUser(userData);
     };
 
-    const signUp = (firstName: string, lastName: string, email: string, password: string, confirmPassword: string, profile: string = '') => {
+    const signUp = async(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, profile: string = '') => {
         setIsLoading(true);
-        axiosConfig.post('/register', {
+       await axiosConfig.post('/register', {
             first_name: firstName,
             last_name: lastName,
             email,
@@ -83,7 +83,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
                 setError(null)
             })
             .catch(error => {
-                handleRequestError(error);
+                handleRequestError(error?.response.data.message);
             })
             .finally(() => {
                 setIsLoading(false);
