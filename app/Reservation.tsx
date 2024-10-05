@@ -81,7 +81,7 @@ const Reservation = () => {
   }, [roomId]);
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return <ActivityIndicator size="large" color="#0000ff" className='mt-52' />;
   }
 
   if (!room) {

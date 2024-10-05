@@ -61,10 +61,10 @@ const RoomDetails = () => {
         </TouchableOpacity>
         <ScrollView className='-z-10' contentContainerStyle={{ paddingTop: 400 }}>
           <View className="flex-1">
-            <Text className="text-right text-xl pt-6 mx-2 font-pbold">₱ {room.price}</Text>
+            <Text className="text-right text-2xl pt-10 mx-2 font-pbold">₱ {room.price}</Text>
             <Text className='text-right text-xl text-gray-500 mx-2 font-pregular'>Tax included</Text>
 
-
+          <Text className='pl-6 font-pbold'>Room number: {room.room_number}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }} className='pl-4' >
             <Text className="text-lg pl-2 font-pregular">
                 <Ionicons name="bed" size={28} color="#15A86D" />

@@ -4,7 +4,10 @@ import axiosConfig from '@/helpers/axiosConfig'
 import { RootStackParamList } from '@/types/ParamList';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ProtectedRoute from '@/components/ProtectedRoute';
-
+import CustomHeader from '@/components/CustomHeader';
+import { router } from 'expo-router';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 interface Room {
   id: number;
   name: string;
@@ -61,7 +64,16 @@ const RoomList = () => {
   return (
     <ProtectedRoute>
       {rooms.length > 0 ? (
-        <View className="flex-1 px-4">
+        <View className="flex-1 px-4 pt-6">
+          <CustomHeader/>
+          <View className='flex flex-row justify-between px-3'>
+          <TouchableOpacity onPress={()=> router.push('/(tabs)/')} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Ionicons name="arrow-back-outline" size={24} color="black" />
+            <Text className='font-psemibold'>Go back</Text>
+          </TouchableOpacity>
+
+          <MaterialIcons name="filter-alt" size={28} color="#15A86D" />
+          </View>
           <FlatList
             className='mt-10'
             showsVerticalScrollIndicator={false}
