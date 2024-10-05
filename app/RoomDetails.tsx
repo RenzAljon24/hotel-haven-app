@@ -9,6 +9,7 @@ import { Room, RootStackParamList } from '@/types/type';
 import { StatusBar } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 
+
 type RoomDetailsRouteProp = RouteProp<RootStackParamList, 'RoomDetails'>;
 
 const RoomDetails = () => {
@@ -60,22 +61,24 @@ const RoomDetails = () => {
         </TouchableOpacity>
         <ScrollView className='-z-10' contentContainerStyle={{ paddingTop: 400 }}>
           <View className="flex-1">
-            <Text className="text-right text-xl pt-4 mx-2 font-pbold">₱ {room.price}</Text>
+            <Text className="text-right text-xl pt-6 mx-2 font-pbold">₱ {room.price}</Text>
             <Text className='text-right text-xl text-gray-500 mx-2 font-pregular'>Tax included</Text>
 
-            <Text className="text-lg p-2 font-pregular">Room Availability: 
-              <Text className='font-pbold'> {room.availability}</Text>
-            </Text>
 
-            <Text className="text-lg px-2 font-pregular">Room Category: 
-              <Text className='font-pbold'> {room.type}</Text>
-            </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }} className='pl-4' >
+            <Text className="text-lg pl-2 font-pregular">
+                <Ionicons name="bed" size={28} color="#15A86D" />
+              </Text>
+              <Text className='font-pbold text-xl'> {room.type}</Text>
+          </View>
+
+            
 
             <TouchableOpacity onPress={handlePress}>
-              <Text className='text-center text-white font-pbold mt-10 p-4 bg-[#15A86D] mx-20 rounded-3xl'>BOOK NOW</Text>
+              <Text className='text-center text-white font-pbold fixed mt-10 p-4 bg-[#15A86D] mx-20 rounded-3xl'>BOOK NOW</Text>
             </TouchableOpacity>
 
-            <View className='flex flex-col mt-10'>
+            <View className='flex flex-col'>
               <Text className='p-4 mt-10 text-xl font-pbold'>
                 Description:
               </Text>
