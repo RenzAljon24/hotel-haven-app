@@ -4,7 +4,10 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import axiosConfig from '@/helpers/axiosConfig';
 import { Room, RootStackParamList } from '@/types/type';
 import { useAuth } from '@/context/AuthContext';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomCalendarPicker from '@/components/CustomDatePicker'; // Adjust the path as needed
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const Reservation = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Reservation'>>();
@@ -94,13 +97,25 @@ const Reservation = () => {
 
       <View className="flex flex-row items-center justify-center mt-10 gap-5">
         <Image source={{ uri: room.image }} className="mt-20 ml-4 w-44 h-44 rounded-2xl" />
-        <View className="ml-6">
+        <View className="ml-6 mt-10">
           <Text className="text-lg font-bold">Room Number: {room.room_number}</Text>
-          <Text className="text-lg font-bold">Type: {room.type}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }} className='mt-2' >
+            <Text className="text-lg  font-pregular">
+                <Ionicons name="bed" size={28} color="#15A86D" />
+              </Text>
+              <Text className='font-pbold text-xl'> {room.type}</Text>
+          </View>
+          <View className='flex flex-row gap-4 mt-10'>
+            <FontAwesome5 name="wifi" size={24} color="black" />
+            <MaterialCommunityIcons name="air-conditioner" size={24} color="black" />
+            <MaterialCommunityIcons name="shield-lock" size={24} color="black" />
+          </View>
         </View>
       </View>
-
-      <View className="flex flex-row mx-7 mt-10 ">
+      <View className='mt-10 mx-4'>
+        <Text className='text-xl font-pblack'>Please enter your desired date</Text>
+      </View>
+      <View className="flex flex-row mx-7 mt-1 ">
         <Text className="text-base font-pregular text-[#15A86D] px-5">
           {checkInDate ? checkInDate.toLocaleDateString() : ""}
         </Text>

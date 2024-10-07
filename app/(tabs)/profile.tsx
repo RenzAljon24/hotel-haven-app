@@ -21,7 +21,7 @@ const Profile = () => {
                     <>
                         <Image
                             source={{ uri: user.profile }}
-                            className="w-40 h-40 rounded-full"
+                            className="w-32 h-32 rounded-full"
                         />
                         <Text className="font-bold text-2xl pt-2">
                             {user.firstName} {user.lastName}

@@ -15,7 +15,7 @@ type RoomDetailsRouteProp = RouteProp<RootStackParamList, 'RoomDetails'>;
 const RoomDetails = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<RoomDetailsRouteProp>();
-  const { id } = route.params; // Assuming 'id' is the correct parameter
+  const { id } = route.params; 
 
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);

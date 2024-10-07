@@ -23,7 +23,7 @@ const SignUp = () => {
     >
       <ScrollView 
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }} 
-        keyboardShouldPersistTaps='handled' // Dismiss keyboard on tap outside
+        keyboardShouldPersistTaps='handled' 
       >
         <View className='flex flex-col items-center text-center mt-20'>
           {/* Logo Image */}
@@ -39,13 +39,13 @@ const SignUp = () => {
               className='border p-3 rounded-lg border-gray-500' 
               textContentType='givenName'
               value={firstName}
-              onChangeText={(text) => setFirstName(text.replace(/[^a-zA-Z]/g, ''))}
+              onChangeText={(text) => setFirstName(text.replace(/[^a-zA-Z-" "]/g, ''))}
             />
             <TextInput 
               placeholder='Enter your last name' 
               className='border p-3 rounded-lg border-gray-500 mt-6' 
               value={lastName}
-              onChangeText={(text) => setLastName(text.replace(/[^a-zA-Z]/g, ''))}
+              onChangeText={(text) => setLastName(text.replace(/[^a-zA-Z-" "]/g, ''))}
             />
             <TextInput 
               placeholder='example@test.com' 

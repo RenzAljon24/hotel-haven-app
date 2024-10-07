@@ -18,30 +18,28 @@ interface Room {
 const HomePage = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const {user} = useAuth();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
+    const getAllRooms = async () => {
+      try {
+        const response = await axiosConfig.get('/rooms/latest')
+        setRooms(response.data);
+      } catch (err: any) {
+        setError(err)
+      }finally{
+        setIsLoading(false);
+      }
+    }
     getAllRooms();
   }, []);
 
-  const getAllRooms = () => {
-    setIsLoading(true);
-    axiosConfig
-      .get<Room[]>('/rooms/latest')
-      .then((response) => {
-        setRooms(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+
 
   if (isLoading) {
-    return <ActivityIndicator className="mt-20" size="large" color="gray" />;
+    return <ActivityIndicator className="mt-32" size="large" color="gray" />;
   }
 
   const handlePress = (id: number) => {
@@ -52,7 +50,7 @@ const HomePage = () => {
     <TouchableOpacity onPress={() => handlePress(item.id)} className="mr-4 p-4 ">
       <Image
         source={{ uri: item.image }}
-        className="w-48 h-72 rounded-2xl" // Adjusted for horizontal layout
+        className="w-48 h-72 rounded-2xl" 
       />
       <Text className="text-lg font-bold mt-2">{item.name}</Text>
     </TouchableOpacity>

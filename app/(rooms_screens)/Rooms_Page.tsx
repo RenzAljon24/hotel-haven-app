@@ -8,6 +8,7 @@ import CustomHeader from '@/components/CustomHeader';
 import { router } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 interface Room {
   id: number;
   name: string;
@@ -17,26 +18,25 @@ interface Room {
 const RoomList = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null)
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
+    const getAllRooms = async () => {
+        try {
+          const response = await axiosConfig.get('/rooms');
+          setRooms(response.data);
+        } catch (err: any) {
+          setError(err)
+        }finally{
+          setIsLoading(false);
+        }
+    }
     getAllRooms();
   }, []);
 
-  const getAllRooms = () => {
-    setIsLoading(true);
-    axiosConfig
-      .get<Room[]>('/rooms')
-      .then((response) => {
-        setRooms(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      }).finally(() => {
-        setIsLoading(false);
-      })
-  };
+
 
   if (isLoading) {
     return <ActivityIndicator className='mt-20' size="large" color="gray" />;
@@ -50,12 +50,12 @@ const RoomList = () => {
     <TouchableOpacity 
       onPress={() => handlePress(item.id)} 
       className="mb-4 p-2"
-      style={{ flex: 1, margin: 5 }} // Ensure even spacing and flexible layout
+      style={{ flex: 1, margin: 5 }} 
     >
       <Image 
         source={{ uri: item.image }} 
         className="w-full h-72 rounded-2xl"
-        style={{ flex: 1 }} // Ensure the image takes full width within its container
+        style={{ flex: 1 }} 
       />
       <Text className="text-lg font-bold mt-2 text-center">{item.name}</Text>
     </TouchableOpacity>
