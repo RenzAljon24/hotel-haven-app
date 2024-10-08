@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, Alert } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
-
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 interface CustomCalendarPickerProps {
     bookedDates: { start: Date, end: Date }[];
     selectedDate?: Date | null;
@@ -57,7 +57,9 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
     return (
         <View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Text className='text-xl text-slate-500 px-4 border border-gray-500 rounded-md font-plight'>{label}</Text>
+                <Text className='text-xl text-slate-500 px-4 border border-gray-500 rounded-md font-plight'>
+                <FontAwesome name="calendar" size={20} color="gray" /> {label}
+                </Text>
             </TouchableOpacity>
 
             <Modal
