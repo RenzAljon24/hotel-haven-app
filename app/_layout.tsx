@@ -37,7 +37,7 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    // Optionally, show a fallback UI while fonts are loading
+    
     return <SplashScreenComponent />;
   }
 

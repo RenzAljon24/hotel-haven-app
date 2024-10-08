@@ -5,7 +5,7 @@ import axiosConfig from '@/helpers/axiosConfig';
 import { Room, RootStackParamList } from '@/types/type';
 import { useAuth } from '@/context/AuthContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import CustomCalendarPicker from '@/components/CustomDatePicker'; // Adjust the path as needed
+import CustomCalendarPicker from '@/components/CustomDatePicker'; 
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
@@ -50,9 +50,16 @@ const Reservation = () => {
       Alert.alert('Error', 'Check-in date must be before the check-out date.');
       return;
     }
+
+    if (checkOutDate && date.toDateString() === checkOutDate.toDateString()) {
+      Alert.alert('Error', 'Check-in and check-out dates cannot be the same. Please select different dates.');
+      return;
+    }
+
     setCheckInDate(date);
     if (checkOutDate && date > checkOutDate) {
-      setCheckOutDate(null); // Optionally reset check-out date if it's invalid
+      setCheckOutDate(null); 
+
     }
     if (date && checkOutDate) {
       calculateTotalPrice(date, checkOutDate);

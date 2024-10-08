@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, Alert, Image } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { images } from '@/constants';
 interface CustomCalendarPickerProps {
     bookedDates: { start: Date, end: Date }[];
     selectedDate?: Date | null;
@@ -19,6 +20,9 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
                                                                        label,
                                                                    }) => {
     const [modalVisible, setModalVisible] = useState(false);
+
+
+    
 
     const getDisabledDates = () => {
         const disabledDates: { [key: string]: {} } = {};
@@ -68,8 +72,14 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
                 animationType="slide"
                 onRequestClose={() => setModalVisible(false)}
             >
-                <View className="flex-1 justify-center  bg-opacity-80">
+                <View className="flex-1 justify-center   bg-opacity-80">
                     <View className="bg-white mx-4 p-4 rounded-lg">
+                        <View className='flex mx-auto items-center m-2'>
+                            <Image 
+                            source={images.logo}
+                            className='w-24 h-10'
+                            />
+                        </View>
                         <Calendar
                             onDayPress={handleDayPress}
                             markedDates={{
@@ -80,6 +90,27 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
                                 ),
                             }}
                             minDate={minimumDate ? moment(minimumDate).format('YYYY-MM-DD') : undefined}
+                        
+                            theme={{
+                                backgroundColor: '#ffffff',
+                                calendarBackground: '#ffffff',
+                                textSectionTitleColor: '#b6c1cd',
+                                textSectionTitleDisabledColor: '#d9e1e8',
+                                selectedDayBackgroundColor: '#15A86D',
+                                selectedDayTextColor: '#ffffff',
+                                todayTextColor: '#15A86D',
+                                dayTextColor: '#2d4150',
+                                textDisabledColor: '#d9e1e8',
+                                dotColor: '#15A86D',
+                                selectedDotColor: '#ffffff',
+                                arrowColor: '#15A86D',
+                                disabledArrowColor: '#d9e1e8',
+                                monthTextColor: '#15A86D',
+                                indicatorColor: '#15A86D',
+                                textDayFontSize: 16,
+                                textMonthFontSize: 20,
+                                textDayHeaderFontSize: 14
+                            }}
                         />
                         <TouchableOpacity onPress={() => setModalVisible(false)}>
                             <Text className="text-center mt-4 bg-[#15A86D] text-white font-pblack p-2 rounded">Submit</Text>
