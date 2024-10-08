@@ -147,7 +147,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
                         },
                     }
                 );
-                Alert.alert('Reservation successful!');
+                console.log('reservation successful!')
             }
         } catch (error: any) {
             handleRequestError(error);

@@ -7,6 +7,8 @@ import '../global.css';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from '@/context/AuthContext';
 import { ActivityIndicator } from 'react-native';
+import { StripeProvider } from '@stripe/stripe-react-native';
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -42,6 +44,7 @@ export default function RootLayout() {
   }
 
   return (
+    <StripeProvider publishableKey="pk_test_51Q7hMJEX4IweCiIU7yXJN0kNvWkGVx3lzIQExNOw9cwJ8kthRaArhlh0dT1LRdIkYMbjj6gRyBnKVzlOg2xGlUOa00RPE0QcnS">
       <GestureHandlerRootView style={{ flex: 1 }}>
         <AuthProvider>
           <Stack>
@@ -50,10 +53,12 @@ export default function RootLayout() {
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(rooms_screens)" options={{ headerShown: false }} />
             <Stack.Screen name="RoomDetails" options={{ headerShown: false }} />
+            <Stack.Screen name="Successful" options={{ headerShown: false }} />
             <Stack.Screen name="Reservation" options={{ headerTitle: "", headerBlurEffect: 'regular', headerTransparent: true}} />
           </Stack>
         </AuthProvider>
       </GestureHandlerRootView>
+    </StripeProvider>
   );
 }
 

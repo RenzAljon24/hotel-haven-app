@@ -9,6 +9,11 @@ import CustomCalendarPicker from '@/components/CustomDatePicker';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
+import { useStripe, initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import { router } from 'expo-router';
+
+
+
 const Reservation = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Reservation'>>();
   const { roomId } = route.params;
@@ -19,6 +24,7 @@ const Reservation = () => {
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [bookedDates, setBookedDates] = useState<{ start: Date, end: Date }[]>([]);
   const { makeReservation } = useAuth();
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();  
 
   const fetchRoomDetails = async () => {
     setLoading(true);
@@ -46,29 +52,19 @@ const Reservation = () => {
   };
 
   const handleCheckInChange = (date: Date) => {
-    if (checkOutDate && date > checkOutDate) {
+    if (checkOutDate && date >= checkOutDate) {
       Alert.alert('Error', 'Check-in date must be before the check-out date.');
       return;
     }
-
-    if (checkOutDate && date.toDateString() === checkOutDate.toDateString()) {
-      Alert.alert('Error', 'Check-in and check-out dates cannot be the same. Please select different dates.');
-      return;
-    }
-
     setCheckInDate(date);
-    if (checkOutDate && date > checkOutDate) {
-      setCheckOutDate(null); 
-
-    }
     if (date && checkOutDate) {
       calculateTotalPrice(date, checkOutDate);
     }
   };
 
   const handleCheckOutChange = (date: Date) => {
-    if (checkInDate && date.toDateString() === checkInDate.toDateString()) {
-      Alert.alert('Please try again', 'The check-out date must be after the check-in date.');
+    if (checkInDate && date <= checkInDate) {
+      Alert.alert('Error', 'The check-out date must be after the check-in date.');
       return;
     }
     setCheckOutDate(date);
@@ -77,23 +73,61 @@ const Reservation = () => {
     }
   };
 
+  const fetchPaymentSheetParams = async () => {
+    const response = await axiosConfig.post('/create-charge', {
+      amount: totalPrice, // in peso
+    });
+
+    const { client_secret } = response.data;
+    return { clientSecret: client_secret };
+  };
+
+  const initializePaymentSheet = async () => {
+    const { clientSecret } = await fetchPaymentSheetParams();
+    const { error } = await initPaymentSheet({
+      paymentIntentClientSecret: clientSecret,
+      merchantDisplayName: 'myapp',
+    });
+
+    if (!error) {
+      openPaymentSheet();
+    } else {
+      Alert.alert('Error', error.message);
+    }
+  };
+
+  const openPaymentSheet = async () => {
+    const { error } = await presentPaymentSheet();
+
+    if (error) {
+      Alert.alert(`Error`, error.message);
+    } else {
+      handleBooking();
+    }
+  };
+
   const handleBooking = async () => {
     if (!room || !checkInDate || !checkOutDate || totalPrice === null) {
       Alert.alert('Error', 'Please fill all the required fields.');
       return;
     }
+
     try {
-      await makeReservation(room.id, totalPrice, checkInDate.toISOString().split('T')[0], checkOutDate.toISOString().split('T')[0]);
-      Alert.alert('Success', 'Room booked successfully!');
-      setBookedDates([...bookedDates, { start: checkInDate!, end: checkOutDate! }]);
+      await makeReservation(
+        room.id,
+        totalPrice,
+        checkInDate.toISOString().split('T')[0],
+        checkOutDate.toISOString().split('T')[0]
+      );
+
+      router.push('/Successful')
       setCheckInDate(null);
       setCheckOutDate(null);
       setTotalPrice(null);
-    } catch (error) {
-      Alert.alert('Error', 'Unable to make the reservation');
+    } catch (error: any) {
+      Alert.alert('Error', 'Unable to complete the reservation.');
     }
   };
-
   useEffect(() => {
     fetchRoomDetails();
   }, [roomId]);
@@ -109,7 +143,6 @@ const Reservation = () => {
   return (
     <ScrollView className="flex-1">
       <StatusBar barStyle={'dark-content'} />
-
       <View className="flex flex-row items-center justify-center mt-10 gap-5">
         <Image source={{ uri: room.image }} className="mt-20 ml-4 w-44 h-44 rounded-2xl" />
         <View className="ml-6 mt-10">
@@ -127,58 +160,46 @@ const Reservation = () => {
           </View>
         </View>
       </View>
+
       <View className='mt-10 mx-4'>
         <Text className='text-xl font-pblack'>Please enter your desired date</Text>
       </View>
 
       <View className="flex flex-row mx-7 mt-2 gap-2">
-      <CustomCalendarPicker
-      label={checkInDate ? checkInDate.toLocaleDateString() : "Check in"}
-      selectedDate={checkInDate}
-      bookedDates={bookedDates}
-      onDateChange={handleCheckInChange}
-      minimumDate={new Date()}
-    />
-    <CustomCalendarPicker
-      label={checkOutDate ? checkOutDate.toLocaleDateString() : "Check out"}
-      selectedDate={checkOutDate}
-      bookedDates={bookedDates}
-      onDateChange={handleCheckOutChange}
-      minimumDate={checkInDate || new Date()}
-    />
+        <CustomCalendarPicker
+          label={checkInDate ? checkInDate.toLocaleDateString() : "Check in"}
+          selectedDate={checkInDate}
+          bookedDates={bookedDates}
+          onDateChange={handleCheckInChange}
+          minimumDate={new Date()}
+        />
+        <CustomCalendarPicker
+          label={checkOutDate ? checkOutDate.toLocaleDateString() : "Check out"}
+          selectedDate={checkOutDate}
+          bookedDates={bookedDates}
+          onDateChange={handleCheckOutChange}
+          minimumDate={checkInDate || new Date()}
+        />
       </View>
 
-      {/* Amenities Section */}
       <View className="mt-10 p-4">
         <Text className="text-lg font-pbold mb-4">Additional Amenities/Facilities</Text>
         <View>
-          {[
-            'Cable TV',
-            'Hot and cold shower',
-            'Bedside Table',
-            'Refrigerator',
-            'Wardrobe',
-            'Comfortable beds',
-            'Vanity Kits',
-            '24 hours front desk',
-            'Luggage Storage',
-          ].map((amenity, index) => (
-            <Text key={index} className="text-base text-gray-600 mb-3 font-pmedium">- {amenity}</Text>
+          {['Cable TV', 'Hot and cold shower', 'Bedside table', 'Dressing table', 'Kitchen sink', 'Wi-Fi'].map((amenity, index) => (
+            <Text key={index} className="text-lg font-pregular">{amenity}</Text>
           ))}
         </View>
       </View>
 
-      <View className="relative bottom-0 w-full p-4">
-        <Text className="text-base text-gray-500">Total Payable amount</Text>
-        <View className="flex flex-row justify-between items-center mx-10 mt-2">
-          <Text className="text-lg text-[#15A86D] font-bold">₱{totalPrice?.toFixed(2) ?? ''}</Text>
-          <TouchableOpacity onPress={handleBooking}>
-            <View className="bg-[#15A86D] p-3 rounded-3xl w-48">
-              <Text className="text-white text-center font-bold">Pay Now</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+      <View className='flex flex-row justify-between mx-6'>
+        <Text className='text-lg font-pblack'>Total Price</Text>
+        <Text className='text-lg font-pblack'>{totalPrice ? `₱ ${totalPrice}` : '₱ 0.00'}</Text>
       </View>
+
+
+      <TouchableOpacity onPress={initializePaymentSheet}>
+        <Text className='text-lg text-center text-white mx-6 my-4 bg-green-600 py-3 rounded-lg'>Book Now</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
