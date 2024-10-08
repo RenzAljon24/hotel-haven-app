@@ -57,7 +57,7 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
     return (
         <View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Text className='text-xl text-[#15A86D] px-4 border border-gray-500 rounded-md'>{label}</Text>
+                <Text className='text-xl text-slate-500 px-4 border border-gray-500 rounded-md font-plight'>{label}</Text>
             </TouchableOpacity>
 
             <Modal
