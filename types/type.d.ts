@@ -25,7 +25,7 @@ declare interface ButtonProps extends TouchableOpacityProps {
 
   export interface Room {
     id: number;
-    room_number: number;
+    room_name: string;
     type: string;
     availability: number;
     image: string;

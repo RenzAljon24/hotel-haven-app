@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 import { images } from '@/constants';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-
+import AntDesign from '@expo/vector-icons/AntDesign';
 // Custom header component
 const CustomHeader = () => (
   <View className="flex-1 justify-center items-center">
@@ -29,9 +29,10 @@ const _layout = () => {
 
       }}
     >
+      <Tabs.Screen name='booking' options={{ tabBarIcon: ({color}) => <AntDesign name="heart" size={28} color={color} />}} />
       <Tabs.Screen name='index' options={{ tabBarIcon: ({color}) => <MaterialCommunityIcons name="home" size={38} color={color} /> }} />
-
       <Tabs.Screen name='profile' options={{ tabBarIcon: ({color}) => <MaterialIcons name="manage-accounts" size={38} color={color} />}} />
+
     </Tabs>
 
   );

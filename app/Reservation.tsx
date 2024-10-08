@@ -46,9 +46,13 @@ const Reservation = () => {
   };
 
   const handleCheckInChange = (date: Date) => {
+    if (checkOutDate && date > checkOutDate) {
+      Alert.alert('Error', 'Check-in date must be before the check-out date.');
+      return;
+    }
     setCheckInDate(date);
     if (checkOutDate && date > checkOutDate) {
-      setCheckOutDate(null);
+      setCheckOutDate(null); // Optionally reset check-out date if it's invalid
     }
     if (date && checkOutDate) {
       calculateTotalPrice(date, checkOutDate);
@@ -56,6 +60,10 @@ const Reservation = () => {
   };
 
   const handleCheckOutChange = (date: Date) => {
+    if (checkInDate && date.toDateString() === checkInDate.toDateString()) {
+      Alert.alert('Please try again', 'The check-out date must be after the check-in date.');
+      return;
+    }
     setCheckOutDate(date);
     if (checkInDate) {
       calculateTotalPrice(checkInDate, date);
@@ -98,12 +106,12 @@ const Reservation = () => {
       <View className="flex flex-row items-center justify-center mt-10 gap-5">
         <Image source={{ uri: room.image }} className="mt-20 ml-4 w-44 h-44 rounded-2xl" />
         <View className="ml-6 mt-10">
-          <Text className="text-lg font-bold">Room Number: {room.room_number}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }} className='mt-2' >
-            <Text className="text-lg  font-pregular">
-                <Ionicons name="bed" size={28} color="#15A86D" />
-              </Text>
-              <Text className='font-pbold text-xl'> {room.type}</Text>
+          <Text className="text-lg font-bold"> {room.room_name}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }} className='mt-2'>
+            <Text className="text-lg font-pregular">
+              <Ionicons name="bed" size={28} color="#15A86D" />
+            </Text>
+            <Text className='font-pbold text-xl'> {room.type}</Text>
           </View>
           <View className='flex flex-row gap-4 mt-10'>
             <FontAwesome5 name="wifi" size={24} color="black" />
@@ -115,57 +123,45 @@ const Reservation = () => {
       <View className='mt-10 mx-4'>
         <Text className='text-xl font-pblack'>Please enter your desired date</Text>
       </View>
-      <View className="flex flex-row mx-7 mt-1 ">
-        <Text className="text-base font-pregular text-[#15A86D] px-5">
-          {checkInDate ? checkInDate.toLocaleDateString() : ""}
-        </Text>
-        <Text className="text-base font-pregular text-[#15A86D] px-5">
-          {checkOutDate ? checkOutDate.toLocaleDateString() : ""}
-        </Text>
-        <Text className='text-base font-pregular text-[#15A86D] px-5'>
-        {checkOutDate ? '1 Room/s' : ""}
-        </Text>
+
+      <View className="flex flex-row mx-7 mt-2 gap-2">
+      <CustomCalendarPicker
+      label={checkInDate ? checkInDate.toLocaleDateString() : "Check in"}
+      selectedDate={checkInDate}
+      bookedDates={bookedDates}
+      onDateChange={handleCheckInChange}
+      minimumDate={new Date()}
+    />
+    <CustomCalendarPicker
+      label={checkOutDate ? checkOutDate.toLocaleDateString() : "Check out"}
+      selectedDate={checkOutDate}
+      bookedDates={bookedDates}
+      onDateChange={handleCheckOutChange}
+      minimumDate={checkInDate || new Date()}
+    />
       </View>
 
-      <View className="flex flex-row mx-7 ">
-        <CustomCalendarPicker
-          label="Check-In"
-          selectedDate={checkInDate}
-          bookedDates={bookedDates}
-          onDateChange={handleCheckInChange}
-          minimumDate={new Date()}
-        />
-        <CustomCalendarPicker
-          label="Check-Out"
-          selectedDate={checkOutDate}
-          bookedDates={bookedDates}
-          onDateChange={handleCheckOutChange}
-          minimumDate={checkInDate || new Date()}
-        />
-        <Text className='text-xl font-pregular text-gray-600 ml-2'>2 Guest(s)</Text>
-      </View>
-
-        {/* Amenities Section */}
+      {/* Amenities Section */}
       <View className="mt-10 p-4">
-          <Text className="text-lg font-pbold mb-4">Additional Amenities/Facilities</Text>
-          <View>
-            {[
-              'Cable TV',
-              'Hot and cold shower',
-              'Bedside Table',
-              'Refrigerator',
-              'Wardrobe',
-              'Comfortable beds',
-              'Vanity Kits',
-              '24 hours front desk',
-              'Luggage Storage',
-            ].map((amenity, index) => (
-              <Text key={index} className="text-base text-gray-600 mb-3 font-pmedium">- {amenity}</Text>
-            ))}
-          </View>
+        <Text className="text-lg font-pbold mb-4">Additional Amenities/Facilities</Text>
+        <View>
+          {[
+            'Cable TV',
+            'Hot and cold shower',
+            'Bedside Table',
+            'Refrigerator',
+            'Wardrobe',
+            'Comfortable beds',
+            'Vanity Kits',
+            '24 hours front desk',
+            'Luggage Storage',
+          ].map((amenity, index) => (
+            <Text key={index} className="text-base text-gray-600 mb-3 font-pmedium">- {amenity}</Text>
+          ))}
+        </View>
       </View>
 
-      <View className="relative bottom-0 w-full p-4 ">
+      <View className="relative bottom-0 w-full p-4">
         <Text className="text-base text-gray-500">Total Payable amount</Text>
         <View className="flex flex-row justify-between items-center mx-10 mt-2">
           <Text className="text-lg text-[#15A86D] font-bold">₱{totalPrice?.toFixed(2) ?? ''}</Text>
@@ -176,8 +172,6 @@ const Reservation = () => {
           </TouchableOpacity>
         </View>
       </View>
-
-
     </ScrollView>
   );
 };
