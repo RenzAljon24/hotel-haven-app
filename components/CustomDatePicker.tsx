@@ -50,7 +50,7 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
             Alert.alert('Date Unavailable', 'The selected date is already booked. Please choose another date.');
         } else {
             onDateChange(new Date(day.timestamp));
-            setModalVisible(false); // Close modal after selecting a date
+            
         }
     };
 
@@ -73,14 +73,14 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
                             markedDates={{
                                 ...getDisabledDates(),
                                 ...(selectedDate
-                                        ? { [moment(selectedDate).format('YYYY-MM-DD')]: { selected: true, selectedColor: 'blue' } }
+                                        ? { [moment(selectedDate).format('YYYY-MM-DD')]: { selected: true, selectedColor: '#15A86D' } }
                                         : {}
                                 ),
                             }}
                             minDate={minimumDate ? moment(minimumDate).format('YYYY-MM-DD') : undefined}
                         />
                         <TouchableOpacity onPress={() => setModalVisible(false)}>
-                            <Text className="text-center mt-4 bg-gray-200 p-2 rounded">Close</Text>
+                            <Text className="text-center mt-4 bg-[#15A86D] text-white font-pblack p-2 rounded">Submit</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
