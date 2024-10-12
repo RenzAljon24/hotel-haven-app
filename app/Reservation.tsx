@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, ActivityIndicator, Image, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, ScrollView, StatusBar } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import axiosConfig from '@/helpers/axiosConfig';
 import { Room, RootStackParamList } from '@/types/type';
 import { useAuth } from '@/context/AuthContext';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import CustomCalendarPicker from '@/components/CustomDatePicker'; 
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
-import { useStripe, initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import { useStripe } from '@stripe/stripe-react-native';
 import { router } from 'expo-router';
 
 
+//components
+import AmenitiesList from '@/components/AmenitiesList';
+import TotalPriceDisplay from '@/components/TotalPrice';
+import RoomList from '@/components/RoomList'
+import BookingButton from '@/components/BookingButton';
+import DatePicker from '@/components/DatePicker';
 
 const Reservation = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Reservation'>>();
@@ -24,7 +25,8 @@ const Reservation = () => {
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [bookedDates, setBookedDates] = useState<{ start: Date, end: Date }[]>([]);
   const { makeReservation } = useAuth();
-  const { initPaymentSheet, presentPaymentSheet } = useStripe();  
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const fetchRoomDetails = async () => {
     setLoading(true);
@@ -83,123 +85,85 @@ const Reservation = () => {
   };
 
   const initializePaymentSheet = async () => {
-    const { clientSecret } = await fetchPaymentSheetParams();
-    const { error } = await initPaymentSheet({
-      paymentIntentClientSecret: clientSecret,
-      merchantDisplayName: 'myapp',
-    });
-
-    if (!error) {
-      openPaymentSheet();
-    } else {
-      Alert.alert('Error', error.message);
-    }
-  };
-
-  const openPaymentSheet = async () => {
-    const { error } = await presentPaymentSheet();
-
-    if (error) {
-      Alert.alert(`Error`, error.message);
-    } else {
-      handleBooking();
-    }
-  };
-
-  const handleBooking = async () => {
-    if (!room || !checkInDate || !checkOutDate || totalPrice === null) {
-      Alert.alert('Error', 'Please fill all the required fields.');
+    setPaymentLoading(true); // Start loading
+    if(!checkInDate && !checkOutDate) {
+      Alert.alert('Booking Message', 'Please Select a date!')
+      setPaymentLoading(false);
       return;
     }
 
     try {
-      await makeReservation(
-        room.id,
-        totalPrice,
-        checkInDate.toISOString().split('T')[0],
-        checkOutDate.toISOString().split('T')[0]
-      );
+      const { clientSecret } = await fetchPaymentSheetParams();
+      const { error } = await initPaymentSheet({
+        paymentIntentClientSecret: clientSecret,
+        merchantDisplayName: 'myapp',
+      });
 
-      router.push('/Successful')
-      setCheckInDate(null);
-      setCheckOutDate(null);
-      setTotalPrice(null);
-    } catch (error: any) {
-      Alert.alert('Error', 'Unable to complete the reservation.');
+      if (!error) {
+        openPaymentSheet();
+      } else {
+        Alert.alert('Error', error.message);
+      }
+    } finally {
+      setPaymentLoading(false); // Stop loading
     }
   };
+
+  const openPaymentSheet = async () => {
+    try {
+      const { error } = await presentPaymentSheet();
+  
+      if (error) {
+        Alert.alert('Booking Cancelled', error.message);
+        return; // cancel if error
+      }
+  
+      //check if defined
+      if (!checkInDate || !checkOutDate || !totalPrice) {
+        Alert.alert('Error', 'Reservation details are incomplete. Please check your dates and total price.');
+        return; 
+      }
+  
+      Alert.alert('Success', 'Your booking has been confirmed!');
+      
+      //makereservation logic made in other file
+      makeReservation(roomId, checkInDate as any, checkOutDate as any, totalPrice as any);
+      
+      router.back();
+    } catch (error) {
+      // Handle errors
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+      console.error(error); // Log the error for debugging purposes
+    }
+  };
+  
+
   useEffect(() => {
     fetchRoomDetails();
-  }, [roomId]);
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" className='mt-52' />;
-  }
-
-  if (!room) {
-    return <Text>No room found</Text>;
-  }
+  }, []);
 
   return (
-    <ScrollView className="flex-1">
-      <StatusBar barStyle={'dark-content'} />
-      <View className="flex flex-row items-center justify-center mt-10 gap-5">
-        <Image source={{ uri: room.image }} className="mt-20 ml-4 w-44 h-44 rounded-2xl" />
-        <View className="ml-6 mt-10">
-          <Text className="text-lg font-bold"> {room.room_name}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }} className='mt-2'>
-            <Text className="text-lg font-pregular">
-              <Ionicons name="bed" size={28} color="#15A86D" />
-            </Text>
-            <Text className='font-pbold text-xl'> {room.type}</Text>
+    <ScrollView className="flex-1 bg-white">
+      <StatusBar barStyle="dark-content" />
+      {loading ? (
+        <ActivityIndicator size="large" color="#15A86D" />
+      ) : (
+        room && (
+          <View>
+            <RoomList room={room} />
+            <DatePicker 
+              checkInDate={checkInDate} 
+              checkOutDate={checkOutDate} 
+              handleCheckInChange={handleCheckInChange} 
+              handleCheckOutChange={handleCheckOutChange} 
+              bookedDates={bookedDates} 
+            />
+            <AmenitiesList />
+            <TotalPriceDisplay totalPrice={totalPrice} />
+            <BookingButton onPress={initializePaymentSheet} loading={paymentLoading} />
           </View>
-          <View className='flex flex-row gap-4 mt-10'>
-            <FontAwesome5 name="wifi" size={24} color="black" />
-            <MaterialCommunityIcons name="air-conditioner" size={24} color="black" />
-            <MaterialCommunityIcons name="shield-lock" size={24} color="black" />
-          </View>
-        </View>
-      </View>
-
-      <View className='mt-10 mx-4'>
-        <Text className='text-xl font-pblack'>Please enter your desired date</Text>
-      </View>
-
-      <View className="flex flex-row mx-7 mt-2 gap-2">
-        <CustomCalendarPicker
-          label={checkInDate ? checkInDate.toLocaleDateString() : "Check in"}
-          selectedDate={checkInDate}
-          bookedDates={bookedDates}
-          onDateChange={handleCheckInChange}
-          minimumDate={new Date()}
-        />
-        <CustomCalendarPicker
-          label={checkOutDate ? checkOutDate.toLocaleDateString() : "Check out"}
-          selectedDate={checkOutDate}
-          bookedDates={bookedDates}
-          onDateChange={handleCheckOutChange}
-          minimumDate={checkInDate || new Date()}
-        />
-      </View>
-
-      <View className="mt-10 p-4">
-        <Text className="text-lg font-pbold mb-4">Additional Amenities/Facilities</Text>
-        <View>
-          {['Cable TV', 'Hot and cold shower', 'Bedside table', 'Dressing table', 'Kitchen sink', 'Wi-Fi'].map((amenity, index) => (
-            <Text key={index} className="text-lg font-pregular">{amenity}</Text>
-          ))}
-        </View>
-      </View>
-
-      <View className='flex flex-row justify-between mx-6'>
-        <Text className='text-lg font-pblack'>Total Price</Text>
-        <Text className='text-lg font-pblack'>{totalPrice ? `₱ ${totalPrice}` : '₱ 0.00'}</Text>
-      </View>
-
-
-      <TouchableOpacity onPress={initializePaymentSheet}>
-        <Text className='text-lg text-center text-white mx-6 my-4 bg-green-600 py-3 rounded-lg'>Book Now</Text>
-      </TouchableOpacity>
+        )
+      )}
     </ScrollView>
   );
 };
