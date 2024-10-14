@@ -36,7 +36,7 @@ const RoomDetails = () => {
   }, [id]);
 
   if (loading) {
-    return <ActivityIndicator className='mt-24 text-4xl' size="large" color="#0000ff" />;
+    return <ActivityIndicator className='mt-96 text-4xl' size="large" color="#15A86D" />;
   }
 
   if (!room) {

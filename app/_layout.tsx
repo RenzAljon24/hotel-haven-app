@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import 'react-native-reanimated';
 import '../global.css';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -9,11 +9,9 @@ import { AuthProvider } from '@/context/AuthContext';
 import { ActivityIndicator } from 'react-native';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
+// Main Component
 export default function RootLayout() {
+  // Load custom fonts
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -26,46 +24,63 @@ export default function RootLayout() {
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
   });
 
+  
+  useEffect(() => {
+    const preventSplashScreenAutoHide = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (e) {
+        console.warn('Failed to prevent splash screen auto-hide:', e);
+      }
+    };
+    preventSplashScreenAutoHide();
+  }, []);
+
+  // Handle fonts error
   useEffect(() => {
     if (error) {
       console.error('Error loading fonts:', error);
     }
   }, [error]);
 
-  useEffect(() => {
+  //hide the splashw hen the fonts are loaded
+  const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
+      try {
+        await SplashScreen.hideAsync();
+      } catch (e) {
+        console.warn('Failed to hide splash screen:', e);
+      }
     }
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    
     return <SplashScreenComponent />;
   }
 
   return (
-    <StripeProvider publishableKey="pk_test_51Q7hMJEX4IweCiIU7yXJN0kNvWkGVx3lzIQExNOw9cwJ8kthRaArhlh0dT1LRdIkYMbjj6gRyBnKVzlOg2xGlUOa00RPE0QcnS">
-      <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <StripeProvider publishableKey="pk_test_51Q7hMJEX4IweCiIU7yXJN0kNvWkGVx3lzIQExNOw9cwJ8kthRaArhlh0dT1LRdIkYMbjj6gRyBnKVzlOg2xGlUOa00RPE0QcnS">
         <AuthProvider>
           <Stack>
             <Stack.Screen name="LandingPage" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(rooms_screens)" options={{ headerShown: false }} />
+            <Stack.Screen name="(hotel-haven-terms)" options={{ headerShown: false }} />
             <Stack.Screen name="RoomDetails" options={{ headerShown: false }} />
             <Stack.Screen name="Successful" options={{ headerShown: false }} />
-            <Stack.Screen name="Reservation" options={{ headerTitle: "", headerBlurEffect: 'regular', headerTransparent: true}} />
+            <Stack.Screen name="Reservation" options={{ headerTitle: "", headerBlurEffect: 'regular', headerTransparent: true }} />
           </Stack>
         </AuthProvider>
-      </GestureHandlerRootView>
-    </StripeProvider>
+      </StripeProvider>
+    </GestureHandlerRootView>
   );
 }
 
 // Optional fallback component while fonts are loading
 const SplashScreenComponent = () => (
   <GestureHandlerRootView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    {/* Replace with your custom splash screen component or activity indicator */}
     <ActivityIndicator size="large" color="#0000ff" />
   </GestureHandlerRootView>
 );

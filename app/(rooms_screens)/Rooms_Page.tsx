@@ -39,7 +39,7 @@ const RoomList = () => {
 
 
   if (isLoading) {
-    return <ActivityIndicator className='mt-20' size="large" color="gray" />;
+    return <ActivityIndicator className='mt-96' size="large" color="#15A86D" />;
   }
 
   const handlePress = (id: number) => {

@@ -3,25 +3,10 @@ import {useRouter} from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import axiosConfig from '@/helpers/axiosConfig';
 import {Alert} from 'react-native';
+import { AuthContextType } from '@/types/type';
+import { User } from '@/types/type';
 
-interface User {
-    token: string;
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    profile: string;
-}
 
-interface AuthContextType {
-    user: User | null;
-    signIn: (email: string, password: string) => void;
-    signUp: (firstName: string, lastName: string, email: string, password: string, confirmPassword: string, profile?: string) => void;
-    signOut: () => void;
-    makeReservation: (totalPrice: number, roomId: number, checkIn: string, checkOut: string) => void;
-    isLoading: boolean;
-    error: string | null;
-}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -156,8 +141,31 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     };
 
+
+
+    const getUserTransactions = async (): Promise<any[]> => {
+        try {
+          const storedUser = await SecureStore.getItemAsync('user');
+          if (storedUser) {
+            const parsedUser = parseUser(storedUser);
+            const response = await axiosConfig.get('/user/transactions', {
+              headers: {
+                Authorization: `Bearer ${parsedUser.token}`,
+              },
+            });
+            return response.data; 
+          }
+          return []; 
+        } catch (error: any) {
+          handleRequestError(error);
+          return []; 
+        }
+      };
+      
+      
+
     return (
-        <AuthContext.Provider value={{user, signIn, signOut, signUp, makeReservation, isLoading, error}}>
+        <AuthContext.Provider value={{user, signIn, signOut, signUp, makeReservation, getUserTransactions, isLoading, error}}>
             {children}
         </AuthContext.Provider>
     );

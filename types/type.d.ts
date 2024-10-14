@@ -2,27 +2,6 @@ import { TextInputProps, TouchableOpacityProps } from "react-native";
 
 
 
-declare interface ButtonProps extends TouchableOpacityProps {
-    title: string;
-    bgVariant?: "primary" | "secondary" | "danger" | "outline" | "success";
-    textVariant?: "primary" | "default" | "secondary" | "danger" | "success";
-    IconLeft?: React.ComponentType<any>;
-    IconRight?: React.ComponentType<any>;
-    className?: string;
-  }
-  
-  declare interface InputFieldProps extends TextInputProps {
-    label: string;
-    icon?: any;
-    secureTextEntry?: boolean;
-    labelStyle?: string;
-    containerStyle?: string;
-    inputStyle?: string;
-    iconStyle?: string;
-    className?: string;
-  }
-
-
   export interface Room {
     id: number;
     room_name: string;
@@ -37,3 +16,42 @@ declare interface ButtonProps extends TouchableOpacityProps {
     RoomDetails: { id: number };
     Reservation: { roomId: number};
   };
+
+  interface AuthContextType {
+    user: User | null;
+    signIn: (email: string, password: string) => void;
+    signUp: (
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string,
+        confirmPassword: string,
+        profile?: string
+    ) => void;
+    signOut: () => void;
+    makeReservation: (
+        totalPrice: number,
+        roomId: number,
+        checkIn: string,
+        checkOut: string
+    ) => void;
+    getUserTransactions: (
+        check_in: string,
+        check_out: string,
+        total_price: number,
+        room_image: string,
+        status: string
+    ) => Promise<any[]>; // Return type should be a promise of an array
+    isLoading: boolean;
+    error: string | null;
+}
+
+
+interface User {
+  token: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profile: string;
+}

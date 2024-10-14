@@ -85,7 +85,7 @@ const Reservation = () => {
   };
 
   const initializePaymentSheet = async () => {
-    setPaymentLoading(true); // Start loading
+     // Start loading
     if(!checkInDate && !checkOutDate) {
       Alert.alert('Booking Message', 'Please Select a date!')
       setPaymentLoading(false);
@@ -93,6 +93,7 @@ const Reservation = () => {
     }
 
     try {
+      setPaymentLoading(true);
       const { clientSecret } = await fetchPaymentSheetParams();
       const { error } = await initPaymentSheet({
         paymentIntentClientSecret: clientSecret,
@@ -124,12 +125,17 @@ const Reservation = () => {
         return; 
       }
   
-      Alert.alert('Success', 'Your booking has been confirmed!');
+   
       
       //makereservation logic made in other file
-      makeReservation(roomId, checkInDate as any, checkOutDate as any, totalPrice as any);
+      await makeReservation(
+        roomId,
+        totalPrice,
+        checkInDate.toISOString().split('T')[0],
+        checkOutDate.toISOString().split('T')[0]
+      );
+      router.push('/Successful')
       
-      router.back();
     } catch (error) {
       // Handle errors
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
@@ -146,7 +152,7 @@ const Reservation = () => {
     <ScrollView className="flex-1 bg-white">
       <StatusBar barStyle="dark-content" />
       {loading ? (
-        <ActivityIndicator size="large" color="#15A86D" />
+        <ActivityIndicator size='large' color="#15A86D" className='mt-96 '/>
       ) : (
         room && (
           <View>
