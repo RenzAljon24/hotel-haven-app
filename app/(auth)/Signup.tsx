@@ -32,7 +32,7 @@ const SignUp = () => {
           {/* Logo Image */}
           <Image 
             source={images.logo}
-            className='w-24 h-24'
+            className='w-52 h-24'
           />
 
           {/* Input Fields */}

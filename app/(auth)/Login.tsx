@@ -3,11 +3,13 @@ import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, S
 import { images } from '@/constants';
 import { Link } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
+import { MaterialIcons, Feather } from '@expo/vector-icons';
 
 const Login = () => {
   const { signIn, error, isLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     signIn(email, password);
@@ -31,20 +33,29 @@ const Login = () => {
 
           {/* Input Fields */}
           <View className='w-96 mt-20'>
-            <TextInput 
-              placeholder='Enter your email' 
-              className='border p-3 rounded-lg border-gray-500' 
-              keyboardType='email-address'
-              value={email}
-              onChangeText={setEmail} 
-            />
-            <TextInput 
-              placeholder='Enter your password' 
-              className='border p-3 rounded-lg border-gray-500 mt-8' 
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword} 
-            />
+            <View className='flex flex-row items-center border p-3 rounded-lg border-gray-500 mb-4 shadow-sm'>
+            <MaterialIcons name='email' size={20} color='#888' />
+              <TextInput 
+                placeholder='Enter your email' 
+                className='ml-2 flex-1' 
+                keyboardType='email-address'
+                value={email}
+                onChangeText={setEmail} 
+              />
+            </View>
+            <View className='flex flex-row items-center border p-3 rounded-lg border-gray-500 mb-4 shadow-sm'>
+              <Feather name='lock' size={20} color='#888' />
+              <TextInput 
+                placeholder='Enter your password' 
+                className='ml-2 flex-1' 
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={setPassword} 
+              />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Feather name={showPassword ? 'eye-off' : 'eye'} size={20} color='#888' />
+              </TouchableOpacity>
+            </View>
             {error && <Text className='text-red-700'>{error}</Text>}
           </View>
 
