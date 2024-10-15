@@ -37,7 +37,9 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         } else if (error.request) {
             console.log('Error request:', error.request);
             setError('No response received from the server. Please try again.');
-        } else {
+
+        }
+         else {
             console.log('Error message:', error.message);
             setError('An unexpected error occurred. Please try again.');
         }

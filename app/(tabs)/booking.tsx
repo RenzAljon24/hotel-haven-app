@@ -54,13 +54,10 @@ const Booking = () => {
               style={{ elevation: 3 }}
             >
               <View className='flex-1 justify-between'>
-                <Text className='text-lg font-semibold text-gray-800'>Check-in: {transaction.check_in}</Text>
+                <Text className='text-lg font-semibold text-gray-800'>Check-in:   {transaction.check_in}</Text>
                 <Text className='text-lg font-semibold text-gray-800'>Check-out: {transaction.check_out}</Text>
                 <Text className='text-base text-gray-600 mt-2'>Total Price: ₱{transaction.total_price}</Text>
                 <Text className='text-base text-green-600 mt-1'>Status: {transaction.status}</Text>
-                <TouchableOpacity className='mt-4 bg-blue-500 p-3 rounded-full'>
-                  <Text className='text-white text-center font-semibold'>View Details</Text>
-                </TouchableOpacity>
               </View>
               <Image
                 source={{ uri: transaction.room_image }}

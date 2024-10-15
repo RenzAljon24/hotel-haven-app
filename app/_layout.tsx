@@ -55,7 +55,12 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return <SplashScreenComponent />;
+    try {
+      return <SplashScreenComponent />;
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   return (
