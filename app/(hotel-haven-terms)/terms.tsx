@@ -13,10 +13,11 @@ const terms = () => {
       <Text>3. Booking and Payment</Text>
       <Text>Room Availability: The availability of rooms is determined by the hotels themselves. HotelHaven is not responsible for any inaccuracies in room availability.</Text>
       <Text>Payments: Payments are processed through secure third-party payment providers. HotelHaven does not store your payment details.</Text>
+      <Text>No Refund Policy: All bookings made through HotelHaven are final and non-refundable. Please review your booking details carefully before completing your reservation.</Text>
       <Text>4. User Conduct</Text>
       <Text>You agree not to:</Text>
       <Text>Violate any laws or regulations while using the App.</Text>
-      <Text>VUse the App for any fraudulent or illegal activities.</Text>
+      <Text>Use the App for any fraudulent or illegal activities.</Text>
       <Text>Provide false or misleading information.</Text>
       <Text>5. Intellectual Property</Text>
       <Text>All content provided in the App, including logos, text, and images, are the intellectual property of HotelHaven or our partners. You may not use this content without our permission.</Text>
