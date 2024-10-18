@@ -15,7 +15,7 @@ const faq = () => {
         <Text>How do I reset my password?</Text>
         <Text>If you forget your password, click on the Forgot Password? link on the login screen and follow the instructions to reset it.</Text>
         <Text>Can I delete my account?</Text>
-        <Text>Yes, you can delete your account by going to Profile > Account Security > Delete Account. Please note that once your account is deleted, all your data will be permanently removed.</Text>
+        <Text>Yes, you can delete your account by going to Profile - Account Security - Delete Account. Please note that once your account is deleted, all your data will be permanently removed.</Text>
     </View>
   )
 }
