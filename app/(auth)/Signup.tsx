@@ -34,7 +34,8 @@ const SignUp = () => {
             source={images.logo}
             className='w-52 h-24'
           />
-          
+           <Text className='font-pregular opacity-50' style={{fontSize: 15}}>Please fill up the fields below{"\n"}  and create your password</Text>
+
           {/* Input Fields */}
           <View className='w-96 mt-12'>
             {/* First Name Field */}
@@ -108,7 +109,7 @@ const SignUp = () => {
           {/* Sign Up Button and Links */}
           <View className='w-80 text-center mt-10'>
             <TouchableOpacity onPress={handleSignUp} disabled={isLoading}>
-              <Text className='rounded-xl text-center p-4 bg-[#15A86D] font-pbold text-white shadow-md'>
+              <Text className='rounded-xl text-center p-4 bg-[#15A86D] font-pbold shadow-md' style={{color: '#B5FFD3'}}>
                 {isLoading ? 'Signing up...' : 'Sign up'}
               </Text>
             </TouchableOpacity>
@@ -118,12 +119,8 @@ const SignUp = () => {
               <Text className='text-center font-pmedium'>
                 Already have an account?
                 <Link href='/(auth)/Login'>
-                  <Text className='text-blue-600'> Log in</Text>
+                  <Text className='text-blue-600 font-psemibold'> Log in</Text>
                 </Link>
-              </Text>
-              <Text className='text-center font-pmedium'>Or</Text>
-              <Text className='text-center font-pmedium'>
-                You can sign in with any of these
               </Text>
             </View>
           </View>

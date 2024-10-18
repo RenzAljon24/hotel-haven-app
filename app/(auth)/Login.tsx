@@ -30,10 +30,11 @@ const Login = () => {
             source={images.logo}
             className='' 
           />
+          <Text className='font-pregular opacity-50' style={{fontSize: 13}}>Please enter your e-mail address{"\n"}             and enter password</Text>
 
           {/* Input Fields */}
           <View className='w-96 mt-20'>
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-lg'>
             <MaterialIcons name='email' size={20} color='#888' />
               <TextInput 
                 placeholder='Enter your email' 
@@ -60,14 +61,14 @@ const Login = () => {
           </View>
 
           {/* Forgot Password Link */}
-          <Text className='text-blue-600 pt-1 pl-48 font-pregular'>
+          <Text className='text-blue-600 pt-1 pl-48 font-psemibold'style={{fontSize: 12, marginLeft: 15}}>
             Forgot your password?
           </Text>
 
           {/* Login Button and Other Links */}
           <View className='w-80 text-center mt-10'>
             <TouchableOpacity onPress={handleLogin}>
-              <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold text-white'>
+              <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold ' style={{color: '#B5FFD3'}}>
                 LOGIN
               </Text>
             </TouchableOpacity>
@@ -77,12 +78,8 @@ const Login = () => {
               <Text className='text-center font-pmedium'>
                 Don’t have an account?
                 <Link href='/(auth)/Signup'>
-                  <Text className='text-blue-600'> Sign up</Text>
+                  <Text className='text-blue-600 font-psemibold'> Sign up</Text>
                 </Link>
-              </Text>
-              <Text className='text-center font-pmedium'>Or</Text>
-              <Text className='text-center font-pmedium'>
-                You can sign in with any of these
               </Text>
             </View>
           </View>
