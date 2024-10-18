@@ -1,9 +1,12 @@
 import React from 'react'
-import { Text,View } from 'react-native'
+import { Text,View,TouchableOpacity,ScrollView } from 'react-native'
+import { router } from "expo-router";
+import { Ionicons } from '@expo/vector-icons';
 
 
 const faq = () => {
   return (
+    <ScrollView>
     <View>
         <Text>1. General Questions</Text>
         <Text>What is HotelHaven?</Text>
@@ -17,6 +20,7 @@ const faq = () => {
         <Text>Can I delete my account?</Text>
         <Text>Yes, you can delete your account by going to Profile - Account Security - Delete Account. Please note that once your account is deleted, all your data will be permanently removed.</Text>
     </View>
+    </ScrollView>
   )
 }
 

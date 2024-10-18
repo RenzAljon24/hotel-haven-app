@@ -63,6 +63,14 @@ const Profile = () => {
               <MaterialCommunityIcons name="file-document-outline" size={24} color="black" />
               <Text className="font-pregular text-lg ml-2 text-slate-900">Terms and Conditions</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => router.push('/(hotel-haven-terms)/faq')} 
+              className="mt-4" 
+              style={{ flexDirection: 'row', alignItems: 'center' }}
+            >
+              <MaterialCommunityIcons name="file-document-outline" size={24} color="black" />
+              <Text className="font-pregular text-lg ml-2 text-slate-900">FAQs</Text>
+            </TouchableOpacity>
           </View>
 
           <View className="p-6  rounded-lg  m-4">

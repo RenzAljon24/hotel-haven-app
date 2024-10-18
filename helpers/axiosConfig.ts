@@ -1,6 +1,6 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://a32e-110-54-199-211.ngrok-free.app/api',
+    baseURL: 'https://4af4-136-158-123-1.ngrok-free.app/api',
 });
 export default instance;
