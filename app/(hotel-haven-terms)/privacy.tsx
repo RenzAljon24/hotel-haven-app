@@ -3,7 +3,7 @@ import React from 'react'
 
 const privacy = () => {
   return (
-    <View>
+    <View className='flex-1'>
       <Text>Privacy Policies for <Text className='color-green-600'>HotelHaven</Text></Text>
       <Text>In HotelHaven, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share information when you use our app for hotel room booking services.</Text>
       <Text>1. Information We Collect</Text>
