@@ -21,7 +21,7 @@ const LandingPage = () => {
           </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/(auth)/Signup')}>
-          <Text className='rounded-full text-center p-4 bg-white font-pbold text-black border border-gray-600 mt-8 w-80'>
+          <Text className='rounded-full text-center p-4 bg-white font-pbold mt-8 w-80'>
             SIGN UP
           </Text>
       </TouchableOpacity>
