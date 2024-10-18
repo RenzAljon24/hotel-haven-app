@@ -33,7 +33,7 @@ const Login = () => {
 
           {/* Input Fields */}
           <View className='w-96 mt-20'>
-            <View className='flex flex-row items-center border p-3 rounded-lg border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
             <MaterialIcons name='email' size={20} color='#888' />
               <TextInput 
                 placeholder='Enter your email' 
@@ -43,7 +43,7 @@ const Login = () => {
                 onChangeText={setEmail} 
               />
             </View>
-            <View className='flex flex-row items-center border p-3 rounded-lg border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
                 placeholder='Enter your password' 
@@ -67,7 +67,7 @@ const Login = () => {
           {/* Login Button and Other Links */}
           <View className='w-80 text-center mt-10'>
             <TouchableOpacity onPress={handleLogin}>
-              <Text className='rounded-xl text-center p-4 bg-[#15A86D] font-pbold text-white'>
+              <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold text-white'>
                 LOGIN
               </Text>
             </TouchableOpacity>
