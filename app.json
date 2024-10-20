@@ -8,8 +8,8 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splashlogo.png",
-      "resizeMode": "contain",
+      "image": "./assets/images/splashhscbig.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "ios": {
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splashlogo.png",
+        "foregroundImage": "./assets/images/splashhscbig.png",
         "backgroundColor": "#ffffff"
       }
     },
