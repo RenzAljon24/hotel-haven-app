@@ -2,6 +2,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { router } from 'expo-router';
 
@@ -23,9 +24,9 @@ const Profile = () => {
               <>
                 <Image
                   source={{ uri: user.profile }}
-                  className="w-32 h-32 rounded-full border-2 border-blue-500"
+                  className="w-32 h-32 rounded-full border-2" style={{shadowOffset: {width: 0, height: 2},shadowOpacity: 0.25,shadowRadius: 3.84,}}
                 />
-                <Text className="font-bold text-2xl pt-2 text-gray-800">
+                <Text className="font-pbold text-2xl pt-2 text-gray-800" style={{fontSize: 24}}>
                   {user.firstName} {user.lastName}
                 </Text>
               </>
@@ -37,40 +38,48 @@ const Profile = () => {
           </View>
 
           <View className="pl-6 rounded-lg  ml-4 gap-2 mt-6">
-            <Text className='py-1 font-pblack'>
+          <Text className='py-1 font-psemibold opacity-50 flex-1' style={{fontSize: 13}}>
+                Support
+            </Text>
+            <TouchableOpacity 
+              onPress={() => router.push('/(hotel-haven-terms)/faq')} 
+              className="mt-4" 
+              style={{ flexDirection: 'row', alignItems: 'center' }}
+            >
+              <MaterialCommunityIcons name="file-document" size={22} color="black" style={{marginLeft: 5}}/>
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>FAQs</Text>
+              <AntDesign name="arrowright" size={24} color="gray" className='' style={{marginLeft: 180}}/>
+            </TouchableOpacity>
+            <Text className='py-1 font-psemibold opacity-50 flex-1' style={{fontSize: 13}}>
                 Information
             </Text>
             <TouchableOpacity 
               onPress={() => router.push('/(hotel-haven-terms)/About')} 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
-              <MaterialCommunityIcons name="information-outline" size={24} color="black" />
-              <Text className="font-pregular text-lg ml-2 text-slate-900">About Hotel Haven</Text>
+              <MaterialCommunityIcons name="information" size={22} color="black" style={{marginLeft: 5}} />
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>About Hotel Haven</Text>
+              <AntDesign name="arrowright" size={24} color="gray" className='' style={{marginLeft: 90}}/>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => router.push('/(hotel-haven-terms)/privacy')} 
               className="mt-4" 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
-              <MaterialCommunityIcons name="lock-outline" size={24} color="black" />
-              <Text className="font-pregular text-lg ml-2 text-slate-900">Privacy Policy</Text>
+              <MaterialCommunityIcons name="lock" size={22} color="black" style={{marginLeft: 5}}/>
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>Privacy Policy</Text>
+              <AntDesign name="arrowright" size={24} color="gray" className='opacity-90' style={{marginLeft: 120}}/>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => router.push('/(hotel-haven-terms)/terms')} 
               className="mt-4" 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
-              <MaterialCommunityIcons name="file-document-outline" size={24} color="black" />
-              <Text className="font-pregular text-lg ml-2 text-slate-900">Terms and Conditions</Text>
+              <MaterialCommunityIcons name="file-document" size={22} color="black" style={{marginLeft: 5}}/>
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>Terms and Conditions</Text>
+              <AntDesign name="arrowright" size={24} color="gray" className='opacity-90' style={{marginLeft: 68}}/>
             </TouchableOpacity>
-            <TouchableOpacity 
-              onPress={() => router.push('/(hotel-haven-terms)/faq')} 
-              className="mt-4" 
-              style={{ flexDirection: 'row', alignItems: 'center' }}
-            >
-              <MaterialCommunityIcons name="file-document-outline" size={24} color="black" />
-              <Text className="font-pregular text-lg ml-2 text-slate-900">FAQs</Text>
-            </TouchableOpacity>
+
           </View>
 
           <View className="p-6  rounded-lg  m-4">
@@ -78,8 +87,8 @@ const Profile = () => {
               onPress={Logout} 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
-              <MaterialCommunityIcons name="logout" size={24} color="red" />
-              <Text className="font-bold text-lg ml-2 text-red-600">
+              <MaterialCommunityIcons name="logout" size={22} color="red" style={{marginLeft: 5}}/>
+              <Text className="font-bold text-lg ml-2 text-red-600" style={{fontSize: 13, marginLeft: 20}}>
                 Log out
               </Text>
             </TouchableOpacity>

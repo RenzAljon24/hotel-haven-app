@@ -109,7 +109,7 @@ const SignUp = () => {
           {/* Sign Up Button and Links */}
           <View className='w-80 text-center mt-10'>
             <TouchableOpacity onPress={handleSignUp} disabled={isLoading}>
-              <Text className='rounded-xl text-center p-4 bg-[#15A86D] font-pbold shadow-md' style={{color: '#B5FFD3'}}>
+              <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold shadow-md' style={{color: '#B5FFD3'}}>
                 {isLoading ? 'Signing up...' : 'Sign up'}
               </Text>
             </TouchableOpacity>
