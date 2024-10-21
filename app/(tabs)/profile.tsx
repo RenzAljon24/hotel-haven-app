@@ -38,7 +38,7 @@ const Profile = () => {
           </View>
 
           <View className="pl-6 rounded-lg  ml-4 gap-2 mt-6">
-          <Text className='py-1 font-psemibold opacity-50 flex-1' style={{fontSize: 13}}>
+          <Text className='py-1 font-psemibold opacity-50 flex-1' style={{fontSize: 14}}>
                 Support
             </Text>
             <TouchableOpacity 
@@ -47,11 +47,11 @@ const Profile = () => {
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
               <MaterialCommunityIcons name="file-document" size={22} color="black" style={{marginLeft: 5}}/>
-              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>FAQs</Text>
-              <AntDesign name="right" size={24} color="gray" className='' style={{marginLeft: 180}}/>
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 15, marginLeft: 20}}>FAQs</Text>
+              <AntDesign name="right" size={20} color="gray" className='' style={{marginLeft: 225}}/>
             
             </TouchableOpacity>
-            <Text className='py-1 font-psemibold opacity-50 flex-1' style={{fontSize: 13}}>
+            <Text className='py-1 font-psemibold opacity-50 flex-1 mt-5' style={{fontSize: 14}}>
                 Information
             </Text>
             <TouchableOpacity 
@@ -59,8 +59,8 @@ const Profile = () => {
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
               <MaterialCommunityIcons name="information" size={22} color="black" style={{marginLeft: 5}} />
-              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>About Hotel Haven</Text>
-              <AntDesign name="right" size={24} color="gray" className='' style={{marginLeft: 90}}/>
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 15, marginLeft: 20}}>About Hotel Haven</Text>
+              <AntDesign name="right" size={20} color="gray" className='' style={{marginLeft: 130}}/>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => router.push('/(hotel-haven-terms)/privacy')} 
@@ -68,8 +68,8 @@ const Profile = () => {
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
               <MaterialCommunityIcons name="lock" size={22} color="black" style={{marginLeft: 5}}/>
-              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>Privacy Policy</Text>
-              <AntDesign name="right" size={24} color="gray" className='opacity-90' style={{marginLeft: 120}}/>
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 15, marginLeft: 20}}>Privacy Policy</Text>
+              <AntDesign name="right" size={20} color="gray" className='opacity-90' style={{marginLeft: 164}}/>
 
             </TouchableOpacity>
             <TouchableOpacity 
@@ -78,8 +78,8 @@ const Profile = () => {
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
               <MaterialCommunityIcons name="file-document" size={22} color="black" style={{marginLeft: 5}}/>
-              <Text className="font-psemibold text-slate-900" style={{fontSize: 13, marginLeft: 20}}>Terms and Conditions</Text>
-              <AntDesign name="right" size={24} color="gray" className='opacity-90' style={{marginLeft: 68}}/>
+              <Text className="font-psemibold text-slate-900" style={{fontSize: 15, marginLeft: 20}}>Terms and Conditions</Text>
+              <AntDesign name="right" size={20} color="gray" className='opacity-90' style={{marginLeft: 105}}/>
 
             </TouchableOpacity>
 
