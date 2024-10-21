@@ -153,9 +153,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             },
           }
         );
-        setModalMessage('Reservation successful!');
-        setModalType('success');
-        setIsModalVisible(true);
+        
+        
       }
     } catch (error: any) {
       handleRequestError(error);
