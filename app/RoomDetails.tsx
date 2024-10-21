@@ -64,7 +64,7 @@ const RoomDetails = () => {
             <Text className="text-right text-2xl pt-10 mx-2 font-pbold">₱ {room.price}</Text>
             <Text className='text-right text-xl text-gray-500 mx-2 font-pregular'>Tax included</Text>
 
-          <Text className='pl-6 font-pbold'>Room number: {room.room_name}</Text>
+          <Text className='pl-6 font-pbold'>Room Name: {room.room_name}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }} className='pl-4' >
             <Text className="text-lg pl-2 font-pregular">
                 <Ionicons name="bed" size={28} color="#15A86D" />

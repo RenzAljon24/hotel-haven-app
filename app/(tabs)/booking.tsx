@@ -50,7 +50,7 @@ const Booking = () => {
           {transactionHistory.map((transaction, index) => (
             <View
               key={index}
-              className='flex flex-row bg-white p-4 mb-4 rounded-xl shadow-md'
+              className='flex flex-row bg-white p-4  mb-4 rounded-xl shadow-md'
               style={{ elevation: 3 }}
             >
               <View className='flex-1 justify-between'>
