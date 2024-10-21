@@ -12,9 +12,9 @@ room:Room
 const RoomDetails = ({ room }:Rooms) => {
   return (
     <View className="flex flex-row items-center justify-center mt-10 gap-5">
-      <Image source={{ uri: room.image }} className="mt-20 ml-9 w-44 h-44 rounded-2xl" />
+      <Image source={{ uri: room.image }} className="mt-20 ml-8 w-44 h-44 rounded-2xl" />
       <View className="ml-1 mt-20 flex-1 ">
-        <Text className="text-2xl font-pblack"> {room.room_name}</Text>
+        <Text className="text-2xl  font-pblack"> {room.room_name}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }} className='mt-2'>
           <Text className="text-lg font-pregular">
             <Ionicons name="bed" size={28} color="#15A86D" />
