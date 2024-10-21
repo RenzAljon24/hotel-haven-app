@@ -29,7 +29,7 @@ const _layout = () => {
 
       }}
     >
-      <Tabs.Screen name='booking' options={{ tabBarIcon: ({color}) => <AntDesign name="heart" size={28} color={color} />}} />
+      <Tabs.Screen name='booking' options={{ tabBarIcon: ({color}) =><AntDesign name="book" size={32} color={color} />}} />
       <Tabs.Screen name='index' options={{ tabBarIcon: ({color}) => <MaterialCommunityIcons name="home" size={38} color={color} /> }} />
       <Tabs.Screen name='profile' options={{ tabBarIcon: ({color}) => <MaterialIcons name="manage-accounts" size={38} color={color} />}} />
 

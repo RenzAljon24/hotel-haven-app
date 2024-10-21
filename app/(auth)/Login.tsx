@@ -24,7 +24,7 @@ const Login = () => {
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }} // Center content
         keyboardShouldPersistTaps='handled' // Dismiss keyboard on tapping outside
       >
-        <View className='flex flex-col items-center text-center mt-20'>
+        <View className='flex flex-col items-center text-center mt-5'>
           {/* Logo Image */}
           <Image 
             source={images.logo}
@@ -34,21 +34,23 @@ const Login = () => {
 
           {/* Input Fields */}
           <View className='w-96 mt-20'>
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-lg'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-xl'>
             <MaterialIcons name='email' size={20} color='#888' />
-              <TextInput 
+              <TextInput
+                placeholderClassName="text-gray-400"
                 placeholder='Enter your email' 
-                className='ml-2 flex-1' 
+                className='ml-2 flex-1 rounded-full border-gray-500 shadow-transparent' 
                 keyboardType='email-address'
                 value={email}
                 onChangeText={setEmail} 
               />
             </View>
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-lg'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
+                placeholderClassName="text-gray-400"
                 placeholder='Enter your password' 
-                className='ml-2 flex-1' 
+                className='ml-2 flex-1 ' 
                 secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={setPassword} 

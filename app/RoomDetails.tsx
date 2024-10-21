@@ -10,6 +10,7 @@ import { StatusBar } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 
 
+
 type RoomDetailsRouteProp = RouteProp<RootStackParamList, 'RoomDetails'>;
 
 const RoomDetails = () => {
@@ -61,28 +62,28 @@ const RoomDetails = () => {
         </TouchableOpacity>
         <ScrollView className='-z-10' contentContainerStyle={{ paddingTop: 400 }}>
           <View className="flex-1">
-            <Text className="text-right text-2xl pt-10 mx-2 font-pbold">₱ {room.price}</Text>
-            <Text className='text-right text-xl text-gray-500 mx-2 font-pregular'>Tax included</Text>
+            <Text className="text-right text-2xl pt-10 mx-5 font-pbold">₱ {room.price}</Text>
+            <Text className='text-right text-xl text-gray-500 mx-5 font-pregular'>Tax included</Text>
 
-          <Text className='pl-6 font-pbold'>Room number: {room.room_name}</Text>
+          <Text className='pl-6 mt-5 font-pbold'>Room Name: {room.room_name}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }} className='pl-4' >
             <Text className="text-lg pl-2 font-pregular">
                 <Ionicons name="bed" size={28} color="#15A86D" />
               </Text>
-              <Text className='font-pbold text-xl'> {room.type}</Text>
+              <Text className='font-pregular text-xl text-gray-500'> {room.type}</Text>
           </View>
 
             
 
             <TouchableOpacity onPress={handlePress}>
-              <Text className='text-center text-white font-pbold fixed mt-10 p-4 bg-[#15A86D] mx-20 rounded-3xl'>BOOK NOW</Text>
+              <Text className='text-center text-white font-pbold fixed mt-10 p-4 bg-[#15A86D] mx-20 rounded-full'>BOOK NOW</Text>
             </TouchableOpacity>
 
             <View className='flex flex-col'>
               <Text className='p-4 mt-10 text-xl font-pbold'>
                 Description:
               </Text>
-              <Text className='p-4 text-gray-500 font-pregular text-base'>
+              <Text className='pl-4 text-gray-500 font-pregular text-base'>
                 {room.description}
               </Text>
             </View>
