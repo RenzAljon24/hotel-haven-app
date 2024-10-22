@@ -85,6 +85,14 @@ const Reservation = () => {
   };
 
   const initializePaymentSheet = async () => {
+    if(!checkInDate){
+      Alert.alert('Please select a checkIn date!')
+      return;
+    }
+    if(!checkOutDate){
+      Alert.alert('Please select a checkOut date!')
+      return;
+    }
      // Start loading
     if(!checkInDate && !checkOutDate) {
       Alert.alert('Booking Message', 'Please Select a date!')

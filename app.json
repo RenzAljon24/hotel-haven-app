@@ -14,13 +14,13 @@
     },
     "ios": {
       "supportsTablet": true
-      
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splashhscbig.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.renz.devi.hotelhaven"
     },
     "web": {
       "bundler": "metro",
@@ -32,6 +32,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3be88c93-bd29-4663-ac9d-832f5eeccb8a"
+      }
     }
   }
 }
