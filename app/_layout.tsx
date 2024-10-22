@@ -73,6 +73,7 @@ export default function RootLayout() {
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(rooms_screens)" options={{ headerShown: false }} />
             <Stack.Screen name="(hotel-haven-terms)" options={{ headerShown: false }} />
+            <Stack.Screen name="(updateProfile)" options={{ headerShown: false }} />
             <Stack.Screen name="RoomDetails" options={{ headerShown: false }} />
             <Stack.Screen name="Successful" options={{ headerShown: false }} />
             <Stack.Screen name="Reservation" options={{ headerTitle: "", headerBlurEffect: 'regular', headerTransparent: true }} />

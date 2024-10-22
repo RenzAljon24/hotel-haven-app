@@ -2,8 +2,6 @@ import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'rea
 import React from 'react'
 import { images } from '@/constants';
 import { router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const About = () => {

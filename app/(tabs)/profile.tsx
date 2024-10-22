@@ -19,10 +19,12 @@ const Profile = () => {
           <View className="flex items-center p-4">
             {user && user.profile ? (
               <>
-                <Image
-                  source={{ uri: user.profile }}
-                  className="w-32 h-32 rounded-full border-2" style={{shadowOffset: {width: 0, height: 2},shadowOpacity: 0.25,shadowRadius: 3.84,}}
-                />
+                <TouchableOpacity onPress={()=> router.push('/(updateProfile)/update-profile')}>
+                  <Image
+                    source={{ uri: user.profile }}
+                    className="w-32 h-32 rounded-full border-2" style={{shadowOffset: {width: 0, height: 2},shadowOpacity: 0.25,shadowRadius: 3.84,}}
+                  />
+                </TouchableOpacity>
                 <Text className="font-pbold text-2xl pt-2 text-gray-800" style={{fontSize: 24}}>
                   {user.firstName} {user.lastName}
                 </Text>

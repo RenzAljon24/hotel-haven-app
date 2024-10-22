@@ -89,7 +89,7 @@ const RoomList = () => {
         {isLoading ? (
             <ActivityIndicator className="mt-96" size="large" color="#15A86D" />
         ) : (
-            <View className="flex-1 px-4 pt-6">
+            <View className="flex-1 px-4 pt-8">
               <CustomHeader />
               <View className="flex flex-row justify-between px-3">
                 <TouchableOpacity onPress={() => router.push('/(tabs)/')} className="flex-row items-center">
@@ -126,8 +126,8 @@ const RoomList = () => {
                 <TouchableOpacity key={type} onPress={() => handleFilterPress(type)} className="py-2 border-b border-gray-300 flex-row items-center">
                   <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
                     <View style={{
-                      height: 24,
-                      width: 24,
+                      height: 12,
+                      width: 12,
                       borderRadius: 12,
                       borderWidth: 2,
                       borderColor: '#15A86D',

@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, ScrollView, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { 
+    View, 
+    Text, 
+    TextInput, 
+    Button, 
+    TouchableOpacity, 
+    ScrollView, 
+    Image, 
+    ActivityIndicator 
+} from 'react-native';
 import { useAuth } from '@/context/AuthContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import * as ImagePicker from 'expo-image-picker';
+
 
 const UpdateProfile = () => {
     const { user, updateProfile, isLoading } = useAuth();
@@ -20,14 +30,15 @@ const UpdateProfile = () => {
         });
 
         if (!result.canceled) {
-            setProfileImage(result.assets[0].uri); // Fixed to correctly access the URI
+            setProfileImage(result.assets[0].uri);
         }
     };
+    
 
     const handleUpdateProfile = async () => {
         setError(null);
         try {
-            await updateProfile(firstName, lastName, profileImage);
+            await updateProfile(firstName, lastName, profileImage || "");
         } catch (error: any) {
             setError('Failed to update profile. Please try again.');
         }
@@ -35,43 +46,47 @@ const UpdateProfile = () => {
 
     return (
         <ProtectedRoute>
-            <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.inputContainer}>
-                    <Text>First Name</Text>
+            <ScrollView className="p-5">
+                <View className="mb-4">
+                    <Text className="text-lg font-semibold">First Name</Text>
                     <TextInput
                         value={firstName}
                         onChangeText={setFirstName}
-                        style={styles.input}
+                        className="border border-gray-300 p-3 rounded mt-1"
                     />
                 </View>
-                <View style={styles.inputContainer}>
-                    <Text>Last Name</Text>
+                <View className="mb-4">
+                    <Text className="text-lg font-semibold">Last Name</Text>
                     <TextInput
                         value={lastName}
                         onChangeText={setLastName}
-                        style={styles.input}
+                        className="border border-gray-300 p-3 rounded mt-1"
                     />
                 </View>
-                <View style={styles.inputContainer}>
-                    <TouchableOpacity onPress={pickImage}>
-                        <Text>Pick an image</Text>
+                <View className="mb-4">
+                    <TouchableOpacity onPress={pickImage} className="">
+                        <Text className="text-white text-center font-semibold bg-blue-500 p-3 rounded">Pick an Image</Text>
                     </TouchableOpacity>
                     {profileImage ? (
                         <Image
                             source={{ uri: profileImage }}
-                            style={styles.previewImage}
+                            className="w-24 h-24 rounded-full mt-4 self-center"
                         />
                     ) : (
                         user?.profile && (
                             <Image
                                 source={{ uri: user.profile }}
-                                style={styles.previewImage}
+                                className="w-24 h-24 rounded-full mt-4 self-center"
                             />
                         )
                     )}
                 </View>
-                {error && <Text style={styles.errorText}>{error}</Text>}
-                <View style={styles.buttonContainer}>
+                {error && (
+                    <Text className="text-red-500 mb-4 text-center">
+                        {error}
+                    </Text>
+                )}
+                <View className="mt-5">
                     {isLoading ? (
                         <ActivityIndicator size="large" color="#0000ff" />
                     ) : (
@@ -82,33 +97,5 @@ const UpdateProfile = () => {
         </ProtectedRoute>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-    },
-    inputContainer: {
-        marginBottom: 15,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 10,
-        borderRadius: 5,
-    },
-    previewImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginTop: 10,
-    },
-    errorText: {
-        color: 'red',
-        marginBottom: 15,
-    },
-    buttonContainer: {
-        marginTop: 20,
-    },
-});
 
 export default UpdateProfile;
