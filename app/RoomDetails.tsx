@@ -10,6 +10,7 @@ import { StatusBar } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 
 
+
 type RoomDetailsRouteProp = RouteProp<RootStackParamList, 'RoomDetails'>;
 
 const RoomDetails = () => {
@@ -64,7 +65,7 @@ const RoomDetails = () => {
             <Text className="text-right text-2xl pt-10 mx-5 font-pbold">₱ {room.price}</Text>
             <Text className='text-right text-xl text-gray-500 mx-5 font-pregular'>Tax included</Text>
 
-          <Text className='pl-6 font-pbold'>Room Name: {room.room_name}</Text>
+          <Text className='pl-6 mt-5 font-pbold'>Room Name: {room.room_name}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }} className='pl-4' >
             <Text className="text-lg pl-2 font-pregular">
                 <Ionicons name="bed" size={28} color="#15A86D" />
@@ -75,7 +76,7 @@ const RoomDetails = () => {
             
 
             <TouchableOpacity onPress={handlePress}>
-              <Text className='text-center text-white font-pbold fixed mt-10 p-4 bg-[#15A86D] mx-20 rounded-3xl'>BOOK NOW</Text>
+              <Text className='text-center text-white font-pbold fixed mt-10 p-4 bg-[#15A86D] mx-20 rounded-full'>BOOK NOW</Text>
             </TouchableOpacity>
 
             <View className='flex flex-col'>

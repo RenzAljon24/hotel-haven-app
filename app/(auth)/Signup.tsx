@@ -41,7 +41,8 @@ const SignUp = () => {
             {/* First Name Field */}
             <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
               <MaterialIcons name='person' size={20} color='#888' />
-              <TextInput 
+              <TextInput
+                placeholderClassName='text-gray-400'
                 placeholder='Enter your first name' 
                 className='ml-2 flex-1'
                 textContentType='givenName'
@@ -54,6 +55,7 @@ const SignUp = () => {
             <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
               <MaterialIcons name='person' size={20} color='#888' />
               <TextInput 
+                placeholderClassName='text-gray-400'
                 placeholder='Enter your last name' 
                 className='ml-2 flex-1'
                 value={lastName}
@@ -65,6 +67,7 @@ const SignUp = () => {
             <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
               <MaterialIcons name='email' size={20} color='#888' />
               <TextInput 
+                placeholderClassName='text-gray-400'
                 placeholder='example@test.com' 
                 className='ml-2 flex-1'
                 keyboardType='email-address'
@@ -77,6 +80,7 @@ const SignUp = () => {
             <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
+                placeholderClassName='text-gray-400'
                 placeholder='Enter your password' 
                 className='ml-2 flex-1'
                 secureTextEntry={!showPassword}
@@ -92,6 +96,7 @@ const SignUp = () => {
             <View className='flex flex-row items-center p-3 rounded-full border-gray-500 shadow-sm'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
+              placeholderClassName='text-gray-400'
                 placeholder='Confirm Password' 
                 className='ml-2 flex-1'
                 secureTextEntry={!showConfirmPassword}
