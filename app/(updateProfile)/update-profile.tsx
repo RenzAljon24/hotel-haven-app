@@ -12,6 +12,8 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import * as ImagePicker from 'expo-image-picker';
+import Feather from '@expo/vector-icons/Feather';
+import { green } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
 
 const UpdateProfile = () => {
@@ -46,8 +48,33 @@ const UpdateProfile = () => {
 
     return (
         <ProtectedRoute>
-            <ScrollView className="p-5">
-                <View className="mb-4">
+            <ScrollView className="p-5 mt-6">
+                <View className="mt-7">
+                    <View className=' flex items-center justify-center text-center'>
+                    <TouchableOpacity onPress={pickImage} className="w-10">
+                        <Text className=''><Feather name="camera" size={24} color="black" /></Text>
+                    </TouchableOpacity>
+                    </View>
+                    {profileImage ? (
+                        <Image
+                            source={{ uri: profileImage }}
+                            className="w-24 h-24 rounded-full mt-4 self-center"
+                        />
+                    ) : (
+                        user?.profile && (
+                            <Image
+                                source={{ uri: user.profile }}
+                                className="w-36 h-36 rounded-full mt-4 self-center"
+                            />
+                        )
+                    )}
+                </View>
+                {error && (
+                    <Text className="text-red-500 mb-4 text-center">
+                        {error}
+                    </Text>
+                )}
+                <View className="mb-4 mt-5">
                     <Text className="text-lg font-semibold">First Name</Text>
                     <TextInput
                         value={firstName}
@@ -63,34 +90,18 @@ const UpdateProfile = () => {
                         className="border border-gray-300 p-3 rounded mt-1"
                     />
                 </View>
-                <View className="mb-4">
-                    <TouchableOpacity onPress={pickImage} className="">
-                        <Text className="text-white text-center font-semibold bg-blue-500 p-3 rounded">Pick an Image</Text>
-                    </TouchableOpacity>
-                    {profileImage ? (
-                        <Image
-                            source={{ uri: profileImage }}
-                            className="w-24 h-24 rounded-full mt-4 self-center"
-                        />
-                    ) : (
-                        user?.profile && (
-                            <Image
-                                source={{ uri: user.profile }}
-                                className="w-24 h-24 rounded-full mt-4 self-center"
-                            />
-                        )
-                    )}
-                </View>
-                {error && (
-                    <Text className="text-red-500 mb-4 text-center">
-                        {error}
-                    </Text>
-                )}
-                <View className="mt-5">
+                <View className="mt-5 text mx-28 ">
                     {isLoading ? (
-                        <ActivityIndicator size="large" color="#0000ff" />
+                        
+                    <TouchableOpacity disabled={isLoading}>
+                    <Text className='bg-[#15A86D] text-center text-stone-100 p-3  rounded-full'><ActivityIndicator /></Text>
+                   </TouchableOpacity>
+                
                     ) : (
-                        <Button title="Update Profile" onPress={handleUpdateProfile} />
+                        <TouchableOpacity onPress={handleUpdateProfile}>
+                        <Text className='bg-[#15A86D]  text-center text-stone-100 p-3 rounded-full'>Save Changes</Text>
+                        </TouchableOpacity>
+                        
                     )}
                 </View>
             </ScrollView>

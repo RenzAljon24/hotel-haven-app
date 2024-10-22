@@ -17,12 +17,12 @@ const Login = () => {
 
   return (
     <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjust behavior based on platform
-      style={{ flex: 1 }} // Fill the available space
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      style={{ flex: 1 }} 
     >
       <ScrollView 
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }} // Center content
-        keyboardShouldPersistTaps='handled' // Dismiss keyboard on tapping outside
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }} 
+        keyboardShouldPersistTaps='handled' 
       >
         <View className='flex flex-col items-center text-center mt-5'>
           {/* Logo Image */}
