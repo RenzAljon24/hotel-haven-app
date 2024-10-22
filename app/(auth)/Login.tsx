@@ -69,9 +69,9 @@ const Login = () => {
 
           {/* Login Button and Other Links */}
           <View className='w-80 text-center mt-10'>
-            <TouchableOpacity onPress={handleLogin}>
+            <TouchableOpacity onPress={handleLogin} disabled={isLoading}>
               <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold ' style={{color: '#B5FFD3'}}>
-                LOGIN
+                {isLoading ? "Log in" : "Logging in..."}
               </Text>
             </TouchableOpacity>
 

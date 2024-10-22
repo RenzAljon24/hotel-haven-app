@@ -33,7 +33,7 @@ const UpdateProfile = () => {
             setProfileImage(result.assets[0].uri);
         }
     };
-    
+
 
     const handleUpdateProfile = async () => {
         setError(null);
