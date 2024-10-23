@@ -9,7 +9,7 @@ const CustomHeader = () => (
   <View className="flex-1 justify-center items-center">
     <Image 
       source={images.logo} 
-      className="w-24 h-10 object-contain" // Adjust width and height as needed
+      className="w-24 h-10 object-contain" 
     />
   </View>
 );
@@ -22,7 +22,7 @@ const _layout = () => {
         tabBarActiveTintColor: "#15A86D",
         headerTitle: () => <CustomHeader />,
         headerStyle: {
-          backgroundColor: 'transparent', 
+          backgroundColor: 'white', 
         },
         headerTitleAlign: 'center', // Center align the title
         tabBarShowLabel: false,

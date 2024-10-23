@@ -11,9 +11,14 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {
-      "autoIncrement": true
-    }
+"production": {
+  "autoIncrement": true,
+  "env": {
+    "NODE_ENV": "production",
+    "EXPO_NO_CACHE": "true" 
+  }
+}
+
   },
   "submit": {
     "production": {}

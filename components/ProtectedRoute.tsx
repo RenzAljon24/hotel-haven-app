@@ -12,17 +12,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const router = useRouter();
 
   React.useEffect(() => {
-    if (user === null) {
-      // Redirect to login page if not authenticated
-      router.push('/LandingPage');
+
+    if(!user || user === null) {
+      router.replace('/LandingPage')
     }
-    if(!user) {
-      router.push('/LandingPage')
-    }
+
+    
   }, [user, router]);
 
 
-  return <>{children}</>; // Render children if user is authenticated
+
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

@@ -16,7 +16,7 @@ const LandingPage = () => {
       className='mt-3'
       />
       <TouchableOpacity onPress={() => router.push('/(auth)/Login')}>
-          <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold text-white mt-8 w-80' style={{color: '#B5FFD3'}}>
+          <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold text-white mt-8 w-80'>
             LOGIN
           </Text>
       </TouchableOpacity>

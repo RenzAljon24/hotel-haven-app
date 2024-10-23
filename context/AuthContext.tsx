@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setModalMessage('Login Successful!');
       setModalType('success');
       setIsModalVisible(true);
-      router.push('/(tabs)/');
+      router.replace('/(tabs)/');
     } catch (error: any) {
       handleRequestError(error);
     } finally {
@@ -126,7 +126,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await SecureStore.deleteItemAsync('user');
       setUser(null);
-      router.push('/Login');
+      router.replace('/(auth)/Login');
     } catch (error: any) {
       handleRequestError(error);
     } finally {
@@ -213,7 +213,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const parsedUser = JSON.parse(storedUser);
 
             // Make an Axios PUT request to update profile using JSON
-            const response = await axios.put('https://a556-2001-fd8-26c5-21bf-dce9-d7b4-cd00-70f3.ngrok-free.app/api/user/profile', data, {
+            const response = await axios.put('http://152.42.167.15/api/user/profile', data, {
                 headers: {
                     Authorization: `Bearer ${parsedUser.token}`,
                     'Content-Type': 'application/json',

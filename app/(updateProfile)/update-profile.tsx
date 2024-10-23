@@ -3,7 +3,6 @@ import {
     View, 
     Text, 
     TextInput, 
-    Button, 
     TouchableOpacity, 
     ScrollView, 
     Image, 
@@ -13,8 +12,7 @@ import { useAuth } from '@/context/AuthContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import * as ImagePicker from 'expo-image-picker';
 import Feather from '@expo/vector-icons/Feather';
-import { green } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
-
+import { Ionicons } from '@expo/vector-icons';
 
 const UpdateProfile = () => {
     const { user, updateProfile, isLoading } = useAuth();
@@ -36,7 +34,6 @@ const UpdateProfile = () => {
         }
     };
 
-
     const handleUpdateProfile = async () => {
         setError(null);
         try {
@@ -48,61 +45,69 @@ const UpdateProfile = () => {
 
     return (
         <ProtectedRoute>
-            <ScrollView className="p-5 mt-6">
-                <View className="mt-7">
-                    <View className=' flex items-center justify-center text-center'>
-                    <TouchableOpacity onPress={pickImage} className="w-10">
-                        <Text className=''><Feather name="camera" size={24} color="black" /></Text>
-                    </TouchableOpacity>
-                    </View>
-                    {profileImage ? (
-                        <Image
-                            source={{ uri: profileImage }}
-                            className="w-24 h-24 rounded-full mt-4 self-center"
-                        />
-                    ) : (
-                        user?.profile && (
+            <ScrollView className="p-5 bg-white">
+                <View className="mt-6">
+                <Ionicons className='m-4' name="arrow-back-outline" size={28} color="black" />
+                    <View className='flex items-center justify-center text-center '>
+                        {profileImage ? (
                             <Image
-                                source={{ uri: user.profile }}
-                                className="w-36 h-36 rounded-full mt-4 self-center"
+                                source={{ uri: profileImage }}
+                                className="w-32 h-32 rounded-full border-4 border-gray-300 shadow-lg mt-4 relative"
                             />
-                        )
-                    )}
-                </View>
-                {error && (
-                    <Text className="text-red-500 mb-4 text-center">
-                        {error}
-                    </Text>
-                )}
-                <View className="mb-4 mt-5">
-                    <Text className="text-lg font-semibold">First Name</Text>
-                    <TextInput
-                        value={firstName}
-                        onChangeText={setFirstName}
-                        className="border border-gray-300 p-3 rounded mt-1"
-                    />
-                </View>
-                <View className="mb-4">
-                    <Text className="text-lg font-semibold">Last Name</Text>
-                    <TextInput
-                        value={lastName}
-                        onChangeText={setLastName}
-                        className="border border-gray-300 p-3 rounded mt-1"
-                    />
-                </View>
-                <View className="mt-5 text mx-28 ">
-                    {isLoading ? (
-                        
-                    <TouchableOpacity disabled={isLoading}>
-                    <Text className='bg-[#15A86D] text-center text-stone-100 p-3  rounded-full'><ActivityIndicator /></Text>
-                   </TouchableOpacity>
-                
-                    ) : (
-                        <TouchableOpacity onPress={handleUpdateProfile}>
-                        <Text className='bg-[#15A86D]  text-center text-stone-100 p-3 rounded-full'>Save Changes</Text>
+                        ) : (
+                            user?.profile && (
+                                <Image
+                                    source={{ uri: user.profile }}
+                                    className="w-32 h-32 rounded-full border-4 border-gray-300 shadow-lg mt-4 relative"
+                                />
+                            )
+                        )}
+                        {/* Camera Icon Overlay */}
+                        <TouchableOpacity 
+                            onPress={pickImage} 
+                            className="absolute bottom-0 right-36  bg-white p-1 rounded-full shadow"
+                        >
+                            <Feather name="camera" size={38} color="#15A86D" />
                         </TouchableOpacity>
-                        
+                    </View>
+                    {error && (
+                        <Text className="text-red-500 mb-4 text-center">
+                            {error}
+                        </Text>
                     )}
+                    <View className="mb-4 mt-5">
+                        <Text className="text-lg font-semibold">First Name</Text>
+                        <TextInput
+                            value={firstName}
+                            onChangeText={setFirstName}
+                            className="border border-gray-300 p-3 rounded mt-1"
+                            placeholder="Enter your first name"
+                        />
+                    </View>
+                    <View className="mb-4">
+                        <Text className="text-lg font-semibold">Last Name</Text>
+                        <TextInput
+                            value={lastName}
+                            onChangeText={setLastName}
+                            className="border border-gray-300 p-3 rounded mt-1"
+                            placeholder="Enter your last name"
+                        />
+                    </View>
+                    <View className="mt-5 mx-4">
+                        {isLoading ? (
+                            <TouchableOpacity disabled={isLoading}>
+                                <View className='bg-[#15A86D] p-3 rounded-full flex-row justify-center items-center'>
+                                    <ActivityIndicator color="#fff" />
+                                </View>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity onPress={handleUpdateProfile}>
+                                <Text className='bg-[#15A86D] text-center text-white p-3 rounded-full'>
+                                    Save Changes
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
                 </View>
             </ScrollView>
         </ProtectedRoute>

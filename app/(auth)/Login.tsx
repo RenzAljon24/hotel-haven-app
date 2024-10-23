@@ -34,18 +34,18 @@ const Login = () => {
 
           {/* Input Fields */}
           <View className='w-96 mt-20'>
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-xl'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
             <MaterialIcons name='email' size={20} color='#888' />
               <TextInput
                 placeholderClassName="text-gray-400"
                 placeholder='Enter your email' 
-                className='ml-2 flex-1 rounded-full border-gray-500 shadow-transparent' 
+                className='ml-2 flex-1 rounded-full border-gray-500 ' 
                 keyboardType='email-address'
                 value={email}
                 onChangeText={setEmail} 
               />
             </View>
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-lg'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
                 placeholderClassName="text-gray-400"
@@ -70,8 +70,8 @@ const Login = () => {
           {/* Login Button and Other Links */}
           <View className='w-80 text-center mt-10'>
             <TouchableOpacity onPress={handleLogin} disabled={isLoading}>
-              <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold ' style={{color: '#B5FFD3'}}>
-                {isLoading ? "Log in" : "Logging in..."}
+              <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold text-white'>
+                {isLoading ? "Logging in..." : "Log in"}
               </Text>
             </TouchableOpacity>
 

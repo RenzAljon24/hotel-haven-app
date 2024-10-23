@@ -1,31 +1,37 @@
 {
   "expo": {
-    "name": "hotel-haven",
+    "name": "Hotel Haven",
     "slug": "hotel-haven",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./assets/images/icon.png",  
+    "scheme": "hotel-haven",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splashhscngaw.png",
+      "image": "./assets/images/splashhscngaw.png",  
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.renz.devi.hotelhaven",
+      "runtimeVersion": {
+        "policy": "appVersion" 
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splashhscbig.png",
+        "foregroundImage": "./assets/images/icon.png", 
+        "icon":"./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.renz.devi.hotelhaven"
+      "package": "com.renz.devi.hotelhaven",
+      "runtimeVersion": "1.1.0"  
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png"  
     },
     "plugins": [
       "expo-router"
@@ -37,6 +43,9 @@
       "eas": {
         "projectId": "3be88c93-bd29-4663-ac9d-832f5eeccb8a"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3be88c93-bd29-4663-ac9d-832f5eeccb8a"
     }
   }
 }
