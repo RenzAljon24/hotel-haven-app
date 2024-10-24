@@ -31,7 +31,7 @@ const SignUp = () => {
         <View className='flex flex-col items-center text-center mt-20'>
           {/* Logo Image */}
           <Image 
-            source={images.logo}
+            source={images.slogo}
             className='w-52 h-24'
           />
            <Text className='font-pregular opacity-50' style={{fontSize: 15}}>Please fill up the fields below{"\n"}  and create your password</Text>

@@ -27,8 +27,8 @@ const Login = () => {
         <View className='flex flex-col items-center text-center mt-5'>
           {/* Logo Image */}
           <Image 
-            source={images.logo}
-            className='' 
+            source={images.slogo}
+            style={{width: 225, height: 100}}
           />
           <Text className='font-pregular opacity-50' style={{fontSize: 13}}>Please enter your e-mail address{"\n"}             and enter password</Text>
 

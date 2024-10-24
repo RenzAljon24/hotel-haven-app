@@ -14,6 +14,7 @@ const LandingPage = () => {
       <Image 
       source={images.slogo}
       className='mt-3'
+      style={{width: 120, height: 50, marginTop: -3}}
       />
       <TouchableOpacity onPress={() => router.push('/(auth)/Login')}>
           <Text className='rounded-full text-center p-4 bg-[#15A86D] font-pbold text-white mt-8 w-80'>
