@@ -34,23 +34,23 @@ const Login = () => {
 
           {/* Input Fields */}
           <View className='w-96 mt-20'>
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
             <MaterialIcons name='email' size={20} color='#888' />
               <TextInput
-                placeholderClassName="text-gray-400"
                 placeholder='Enter your email' 
-                className='ml-2 flex-1 rounded-full border-gray-500 ' 
+                placeholderTextColor="#BBB"
+                className='ml-2 flex-1 rounded-full' 
                 keyboardType='email-address'
                 value={email}
                 onChangeText={setEmail} 
               />
             </View>
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full mb-4 border-gray-500'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
-                placeholderClassName="text-gray-400"
-                placeholder='Enter your password' 
-                className='ml-2 flex-1 ' 
+                placeholder='Enter your password'
+                placeholderTextColor="#BBB" 
+                className='ml-2 flex-1' 
                 secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={setPassword} 

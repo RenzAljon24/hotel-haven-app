@@ -39,11 +39,12 @@ const SignUp = () => {
           {/* Input Fields */}
           <View className='w-96 mt-12'>
             {/* First Name Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
               <MaterialIcons name='person' size={20} color='#888' />
               <TextInput
-                placeholderClassName='text-gray-400'
+        
                 placeholder='Enter your first name' 
+                placeholderTextColor="#BBB"
                 className='ml-2 flex-1'
                 textContentType='givenName'
                 value={firstName}
@@ -52,10 +53,10 @@ const SignUp = () => {
             </View>
 
             {/* Last Name Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
               <MaterialIcons name='person' size={20} color='#888' />
               <TextInput 
-                placeholderClassName='text-gray-400'
+               placeholderTextColor="#BBB"
                 placeholder='Enter your last name' 
                 className='ml-2 flex-1'
                 value={lastName}
@@ -64,10 +65,10 @@ const SignUp = () => {
             </View>
 
             {/* Email Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
               <MaterialIcons name='email' size={20} color='#888' />
               <TextInput 
-                placeholderClassName='text-gray-400'
+               placeholderTextColor="#BBB"
                 placeholder='example@test.com' 
                 className='ml-2 flex-1'
                 keyboardType='email-address'
@@ -77,10 +78,10 @@ const SignUp = () => {
             </View>
 
             {/* Password Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
-                placeholderClassName='text-gray-400'
+                placeholderTextColor="#BBB"
                 placeholder='Enter your password' 
                 className='ml-2 flex-1'
                 secureTextEntry={!showPassword}
@@ -93,10 +94,10 @@ const SignUp = () => {
             </View>
 
             {/* Confirm Password Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 shadow-sm'>
+            <View className='flex flex-row items-center p-3 rounded-full border-gray-500'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
-              placeholderClassName='text-gray-400'
+                placeholderTextColor="#BBB"
                 placeholder='Confirm Password' 
                 className='ml-2 flex-1'
                 secureTextEntry={!showConfirmPassword}
