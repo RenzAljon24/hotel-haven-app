@@ -42,6 +42,7 @@ const FAQs = () => {
                     <View key={index} style={styles.faqItem}>
                         <Text style={styles.question}>{faq.question}</Text>
                         <View style={styles.answerContainer}>
+                            <View style={styles.dot} />
                             <Text style={styles.answer}>{faq.answer}</Text>
                         </View>
                     </View>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: 'bold',
         color: 'green', 
-        textAlign: 'center',
+        textAlign: 'center', 
         flex: 1, 
     },
     faqItem: {
@@ -85,10 +86,20 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     answerContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
         backgroundColor: '#fff', 
         borderRadius: 10,
         padding: 10,
         overflow: 'hidden',
+    },
+    dot: {
+        width: 8, 
+        height: 8,
+        borderRadius: 4, 
+        backgroundColor: 'green', 
+        marginRight: 10, 
+        alignSelf: 'flex-start', 
     },
     answer: {
         fontSize: 14,
