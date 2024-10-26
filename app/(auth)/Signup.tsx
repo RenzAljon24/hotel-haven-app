@@ -39,7 +39,7 @@ const SignUp = () => {
           {/* Input Fields */}
           <View className='w-96 mt-12'>
             {/* First Name Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
+            <View className='flex flex-row items-center p-3 rounded-full border border-gray-500 mb-4'>
               <MaterialIcons name='person' size={20} color='#888' />
               <TextInput
         
@@ -53,7 +53,7 @@ const SignUp = () => {
             </View>
 
             {/* Last Name Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
+            <View className='flex flex-row items-center p-3 rounded-full border border-gray-500 mb-4'>
               <MaterialIcons name='person' size={20} color='#888' />
               <TextInput 
                placeholderTextColor="#BBB"
@@ -65,7 +65,7 @@ const SignUp = () => {
             </View>
 
             {/* Email Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
+            <View className='flex flex-row items-center p-3 rounded-full border border-gray-500 mb-4'>
               <MaterialIcons name='email' size={20} color='#888' />
               <TextInput 
                placeholderTextColor="#BBB"
@@ -78,7 +78,7 @@ const SignUp = () => {
             </View>
 
             {/* Password Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500 mb-4'>
+            <View className='flex flex-row items-center p-3 rounded-full border border-gray-500 mb-4'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
                 placeholderTextColor="#BBB"
@@ -94,7 +94,7 @@ const SignUp = () => {
             </View>
 
             {/* Confirm Password Field */}
-            <View className='flex flex-row items-center p-3 rounded-full border-gray-500'>
+            <View className='flex flex-row items-center p-3 rounded-full border border-gray-500'>
               <Feather name='lock' size={20} color='#888' />
               <TextInput 
                 placeholderTextColor="#BBB"
