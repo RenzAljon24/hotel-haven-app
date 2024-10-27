@@ -94,7 +94,7 @@ const RoomList = () => {
           <View className="flex flex-row justify-between px-3">
             <TouchableOpacity onPress={() => router.push('/(tabs)/')} className="flex-row items-center">
               <Ionicons name="arrow-back-outline" size={24} color="black" />
-              <Text className="font-semibold">Go back</Text>
+              <Text className="font-psemibold ml-3">Go back</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={openModal} onLayout={onFilterButtonLayout} className="relative">
               <MaterialIcons name="filter-alt" size={28} color="#15A86D" />
@@ -119,8 +119,8 @@ const RoomList = () => {
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }} />
         </TouchableWithoutFeedback>
-        <View className="absolute bg-white rounded-lg p-5 shadow-lg" style={{ top: filterButtonCoords.y, right: 15, width: 200 }}>
-          <Text className="font-bold text-lg mb-2">Filter by Room Type</Text>
+        <View className="absolute bg-white rounded-2xl p-5 shadow-lg" style={{ top: filterButtonCoords.y, right: 15, width: 200 }}>
+          <Text className="font-pbold text-md mb-1">Filter by Room Type</Text>
           {['single', 'double', 'suite'].map((type) => (
             <TouchableOpacity key={type} onPress={() => handleFilterPress(type)} className="py-2 border-b border-gray-300 flex-row items-center">
               <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
@@ -142,7 +142,7 @@ const RoomList = () => {
                     }} />
                   )}
                 </View>
-                <Text className="text-lg ml-2">{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
+                <Text className="text-md ml-2 font-pmedium">{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
               </View>
             </TouchableOpacity>
           ))}
