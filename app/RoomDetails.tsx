@@ -60,21 +60,28 @@ const RoomDetails = () => {
         <TouchableOpacity onPress={() => navigation.goBack()} className="absolute p-2 z-10">
           <Ionicons className='top-14 left-6' name="arrow-back-outline" size={28} color="black" />
         </TouchableOpacity>
-        <ScrollView className='-z-10' contentContainerStyle={{ paddingTop: 400 }}>
+        <ScrollView className='-z-10 mt-10' contentContainerStyle={{ paddingTop: 400 }}>
          
            {/*Room name*/}
-          <Text className='pl-6 mt-1 p-1 text-2xl font-pbold'>{room.room_name}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }} className='pl-4' >
-            <Text className="text-lg pl-2 font-pregular">
-                <Ionicons name="bed" size={23} color="#15A86D" />
-              </Text>
-              <Text className='font-pregular text-lg text-gray-500'> {room.type}</Text>
-              
-          </View>
+           <View className='flex flex-row justify-between my-5'>
+            <View>
+            <Text className='pl-6 mt-1 p-1 text-xl font-pbold'>{room.room_name}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }} className='pl-4' >
+              <Text className="text-lg pl-2 font-pregular">
+                  <Ionicons name="bed" size={23} color="#15A86D" />
+                </Text>
+                <Text className='font-pregular text-lg text-gray-500'> {room.type}</Text>  
+            </View>
+            </View>
+           
+            <View>
+              <Text className="text-right text-lg pt-3 mx-5 font-pbold">₱ {room.price}/Night</Text>
+              <Text className='text-right text-sl text-gray-500 mx-5 font-pregular'>Tax included</Text>
+            </View>
+           </View>
 
              <View className="flex-1" style={{marginTop: -30}}>
-            <Text className="text-right text-lg pt-3 mx-5 font-pbold">₱ {room.price}/Night</Text>
-            <Text className='text-right text-sl text-gray-500 mx-5 font-pregular'>Tax included</Text>
+            
 
             <TouchableOpacity onPress={handlePress}>
               <Text className='text-center text-white font-pbold fixed mt-10 p-4 bg-[#15A86D] mx-20 rounded-full'>BOOK NOW</Text>

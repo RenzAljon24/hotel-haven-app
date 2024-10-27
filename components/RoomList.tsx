@@ -13,7 +13,7 @@ const RoomDetails = ({ room }:Rooms) => {
   return (
     <View className="flex flex-row items-center justify-center mt-10 gap-5">
       <View style={{position: 'absolute', backgroundColor: 'white', width: 340, transform: [{translateY: 30}], height: 150, borderColor: 'black', borderRadius: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.50, shadowRadius: 3.84, elevation: 10}}></View>
-      <Image source={{ uri: room.image }} className="mt-20 ml-8 w-32 h-32 rounded-lg" />
+      <Image source={{ uri: room.image }} className="mt-20 ml-10 w-32 h-32 rounded-lg" />
       <View className="ml-1 mt-20 flex-1 ">
         <Text className="text-lg  font-pbold"> {room.room_name}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }} className='mt-2'>

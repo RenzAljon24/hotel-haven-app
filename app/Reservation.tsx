@@ -157,7 +157,8 @@ const Reservation = () => {
   }, []);
 
   return (
-    <ScrollView className="flex-1 bg-white">
+    <View className='flex-1 bg-white'>
+       <ScrollView className="">
       <StatusBar barStyle="dark-content" />
       {loading ? (
         <ActivityIndicator size='large' color="#15A86D" className='mt-96 '/>
@@ -173,12 +174,16 @@ const Reservation = () => {
               bookedDates={bookedDates} 
             />
             <AmenitiesList />
-            <TotalPriceDisplay totalPrice={totalPrice} />
-            <BookingButton onPress={initializePaymentSheet} loading={paymentLoading} />
+            <View className=''>
+              <TotalPriceDisplay totalPrice={totalPrice} />
+              <BookingButton onPress={initializePaymentSheet} loading={paymentLoading} />
+            </View>
           </View>
         )
       )}
     </ScrollView>
+    </View>
+   
   );
 };
 
