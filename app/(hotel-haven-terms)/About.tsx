@@ -23,7 +23,7 @@ const About = () => {
           </View>
           <View className='flex-1 mt-2 p-3' style={{alignItems: 'center', width: 140, height: 120, backgroundColor: 'white', borderColor: 'black', borderRadius: 8, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.50, shadowRadius: 3.84, elevation: 10}}>
           <Image source={images.icon} style={{width: 80, height: 100}}/></View>
-          <View className='flex-1 mt-3 p-3' style={{width: 174, height: 179, marginTop: -179, marginLeft: 150, backgroundColor: 'white', borderColor: 'black', borderRadius: 8, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.50, shadowRadius: 3.84, elevation: 10}}>
+          <View className='mt-3 p-3' style={{justifyContent: 'center', width: 'auto', height: 179, marginTop: -179, marginLeft: 150, backgroundColor: 'white', borderColor: 'black', borderRadius: 8, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.50, shadowRadius: 3.84, elevation: 10}}>
             <Text className='font-psemibold' style={{textAlign: 'center', fontSize: 11}}>At<Text> HotelHaven</Text>, we aim to make hotel bookings easier and more convenient. We believe that everyone deserves a stress-free travel experience, and finding a hotel should be the first step in that journey</Text>
           </View>
            <View className='flex-1 mt-3 p-3' style={{backgroundColor: 'white', borderColor: 'black', borderRadius: 8, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.50, shadowRadius: 3.84, elevation: 10}}>
