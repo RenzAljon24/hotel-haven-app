@@ -76,20 +76,20 @@ const UpdateProfile = () => {
                         </Text>
                     )}
                     <View className="mb-4 mt-5">
-                        <Text className="text-lg font-semibold">First Name</Text>
+                        <Text className="text-lg font-psemibold">First Name</Text>
                         <TextInput
                             value={firstName}
                             onChangeText={setFirstName}
-                            className="border border-gray-300 p-3 rounded mt-1"
+                            className="border border-gray-300 p-2 mt-1 rounded-lg"
                             placeholder="Enter your first name"
                         />
                     </View>
                     <View className="mb-4">
-                        <Text className="text-lg font-semibold">Last Name</Text>
+                        <Text className="text-lg font-psemibold">Last Name</Text>
                         <TextInput
                             value={lastName}
                             onChangeText={setLastName}
-                            className="border border-gray-300 p-3 rounded mt-1"
+                            className="border border-gray-300 p-2 rounded-lg mt-1 "
                             placeholder="Enter your last name"
                         />
                     </View>
@@ -102,7 +102,7 @@ const UpdateProfile = () => {
                             </TouchableOpacity>
                         ) : (
                             <TouchableOpacity onPress={handleUpdateProfile}>
-                                <Text className='bg-[#15A86D] text-center text-white p-3 rounded-full'>
+                                <Text className='bg-[#15A86D] text-center font-pmedium text-white p-3 rounded-full'>
                                     Save Changes
                                 </Text>
                             </TouchableOpacity>
