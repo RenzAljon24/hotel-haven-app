@@ -71,7 +71,7 @@ const HomePage = () => {
               <View className="p-3">
                 <View className="flex-row items-center justify-center pt-2">
                   <EvilIcons name="calendar" size={27} color="#15A86D" />
-                  <Text className="text-gray-700 font-pblack ">
+                  <Text className="text-gray-700 font-pbold ">
                     {formatDate(new Date())}
                   </Text>
                 </View>
@@ -86,9 +86,9 @@ const HomePage = () => {
                               className="w-20 h-20 rounded-full"
                           />
                           <View className='flex flex-col ml-3 '>
-                            <Text className='font-pextrabold text-xl pt-3 text-gray-50'>Greetings to you,</Text>
-                            <Text className="font-pextrabold text-xl pt-1 text-gray-50">
-                                {user.firstName}!
+                            <Text className='font-pbold text-xl pt-3 text-gray-50'>Greetings to you,</Text>
+                            <Text className="font-pbold text-center text-xl pt-1 text-gray-50">
+                                {user.firstName}!👋
                             </Text>
                           </View>
                       </View>
@@ -99,7 +99,7 @@ const HomePage = () => {
                   )}
             </View>
             <View className='flex flex-row justify-between mr-4'>
-              <Text className='text-xl font-pbold '>Latest rooms</Text>
+              <Text className='text-xl font-psemibold '>Latest rooms</Text>
               <Link href={'/(rooms_screens)/Rooms_Page'}><Text className='font-pmedium text-gray-500 text-lg'>View all</Text></Link>
             </View>
             <View className='h-[290px]'>
@@ -115,7 +115,7 @@ const HomePage = () => {
             </View>
               {/* Hotel amnesties*/}
             <View className='flex flex-row justify-between mr-4 mt-20'>
-              <Text className='text-xl font-pbold '>Hotel Amnenities</Text>
+              <Text className='text-xl font-psemibold '>Hotel Amnenities</Text>
             </View>
             <View className='py-5'>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className='flex'>
@@ -125,6 +125,14 @@ const HomePage = () => {
                   />
                                     <Image 
                   source={images.gymTwo}
+                  className='w-[200px] h-[100px] rounded-lg mx-4'
+                  />
+                  <Image 
+                  source={images.gymFour}
+                  className='w-[200px] h-[100px] rounded-lg mx-4'
+                  />
+                  <Image 
+                  source={images.gymThree}
                   className='w-[200px] h-[100px] rounded-lg mx-4'
                   />
                 </ScrollView>
