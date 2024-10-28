@@ -83,6 +83,7 @@ const RoomList = () => {
     const { x, y, width, height } = event.nativeEvent.layout;
     setFilterButtonCoords({ x, y: y + height });
   };
+  
 
   return (
     <ProtectedRoute>

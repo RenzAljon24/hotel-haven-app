@@ -97,7 +97,7 @@ const Reservation = () => {
 
   const fetchPaymentSheetParams = async () => {
     const response = await axiosConfig.post('/create-charge', {
-      amount: totalPrice,
+      amount:  totalPrice,
     });
 
     const { client_secret } = response.data;

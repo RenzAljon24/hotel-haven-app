@@ -9,11 +9,13 @@ import { Link } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import { images } from '@/constants';
 
+
 interface Room {
   id: number;
   name: string;
   image: string;
 }
+
 
 const HomePage = () => {
   const [rooms, setRooms] = useState<Room[]>([]);

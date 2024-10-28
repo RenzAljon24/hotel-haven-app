@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
 import { MaterialIcons, Feather } from '@expo/vector-icons';
 import { images } from '@/constants';
 import { Link } from 'expo-router';
@@ -15,7 +15,14 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu|ph)$/;
+
+
   const handleSignUp = () => {
+    if (!emailPattern.test(email)) {
+      Alert.alert('email message','Please enter a valid email ending with .com, .edu, or .ph');
+      return;
+    }
     signUp(firstName, lastName, email, password, confirmPassword);
   };
 
@@ -49,6 +56,7 @@ const SignUp = () => {
                 textContentType='givenName'
                 value={firstName}
                 onChangeText={(text) => setFirstName(text.replace(/[^a-zA-Z-\s]/g, ''))}
+                maxLength={30}
               />
             </View>
 
@@ -61,6 +69,7 @@ const SignUp = () => {
                 className='ml-2 flex-1'
                 value={lastName}
                 onChangeText={(text) => setLastName(text.replace(/[^a-zA-Z-\s]/g, ''))}
+                maxLength={30}
               />
             </View>
 
@@ -74,6 +83,8 @@ const SignUp = () => {
                 keyboardType='email-address'
                 value={email}
                 onChangeText={setEmail}
+                maxLength={30}
+                autoCapitalize='none'
               />
             </View>
 
@@ -87,6 +98,7 @@ const SignUp = () => {
                 secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={setPassword}
+                maxLength={30}
               />
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                 <Feather name={showPassword ? 'eye-off' : 'eye'} size={20} color='#888' />
@@ -103,6 +115,7 @@ const SignUp = () => {
                 secureTextEntry={!showConfirmPassword}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
+                maxLength={30}
               />
               <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
                 <Feather name={showConfirmPassword ? 'eye-off' : 'eye'} size={20} color='#888' />

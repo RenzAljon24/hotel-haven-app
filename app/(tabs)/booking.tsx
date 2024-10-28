@@ -6,14 +6,14 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { router } from 'expo-router';
 import { useNavigation } from '@react-navigation/native';
 
+
 const Booking = () => {
   const { getUserTransactions } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [transactionHistory, setTransactionHistory] = useState<any[]>([]);
-
   const navigation = useNavigation(); 
 
-  // Handle back button press
+
   const backAction = () => {
    if (navigation.isFocused()) {
      Alert.alert("Hold on!", "Are you sure you want to go back?", [
@@ -24,17 +24,18 @@ const Booking = () => {
        },
        { text: "YES", onPress: () => BackHandler.exitApp() }
      ]);
-     return true; // Prevent default back action
+     return true; 
    }
  };
 
+ 
  useEffect(() => {
    const backHandler = BackHandler.addEventListener(
      "hardwareBackPress",
      backAction
    );
 
-   return () => backHandler.remove(); // Clean up the event listener
+   return () => backHandler.remove(); 
  }, []);
 
   useEffect(() => {

@@ -6,7 +6,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 const privacy = () => {
   return (
-
     <ScrollView>
       <View>
         <View className='pt-4 flex justify-items-start mt-10 mx-5'>
@@ -21,9 +20,7 @@ const privacy = () => {
             <Text className="text-2xl mt-10 font-pbold">
               <Text className='text-center'>Privacy Policies for <Text className='color-green-600'>HotelHaven</Text></Text>
             </Text>
-
           </View>
-
           <View className="mx-7 mt-4">
           <Text className="flex text-justify text-lg">In HotelHaven, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share information when you use our app for hotel room booking services.</Text>
           </View>

@@ -5,12 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 
 const faqs = [
     {
-        question: "1. What is HotelHaven?",
-        answer: "HotelHaven is a hotel room booking service that allows users to find, compare, and book rooms."
+        question: "1. General Questions",
+        answer: "What is HotelHaven?",
+        
     },
     {
         question: "2. Booking Process",
-        answer: "Simply search for a hotel by entering a location or hotel name, browse the results, select a room, and click Book Now. You’ll be prompted to select dates and make payment."
+        answer: "How do i book a room?."
     },
     {
         question: "3. Account and Profile",
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: 'green', 
-        marginBottom: 5,
+        marginBottom: 3,
     },
     answerContainer: {
         flexDirection: 'row',

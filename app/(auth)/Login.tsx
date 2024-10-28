@@ -43,6 +43,7 @@ const Login = () => {
                 keyboardType='email-address'
                 value={email}
                 onChangeText={setEmail} 
+                maxLength={30}
               />
             </View>
             <View className='flex flex-row items-center p-3 rounded-full mb-4 border border-gray-500'>
@@ -54,6 +55,8 @@ const Login = () => {
                 secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={setPassword} 
+                maxLength={30}
+                autoCapitalize='none'
               />
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                 <Feather name={showPassword ? 'eye-off' : 'eye'} size={20} color='#888' />

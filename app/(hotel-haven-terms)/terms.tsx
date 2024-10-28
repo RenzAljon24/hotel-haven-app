@@ -50,7 +50,7 @@ const terms = () => {
       <Text className="mx-12 text-lg">We may update these Terms and Conditions from time to time. You will be notified of any changes by an update in the App.</Text>
       
       <Text className='font-pbold text-lg mt-6 mx-7'>9. Contact Us</Text>
-      <Text className='mx-12 text-lg'>If you have any questions about these Terms and Conditions, please contact us at <Text className='color-blue-500'>support@hotelhaven.com</Text></Text>
+      <Text className='mx-12 text-lg'>If you have any questions about these Terms and Conditions, please contact us at <TouchableOpacity onPress={() => router.push('https://www.facebook.com/profile.php?id=61565750799699')}><Text className='color-blue-500'>support@hotelhaven.com</Text></TouchableOpacity></Text>
     </View>
     </ScrollView>
   )
