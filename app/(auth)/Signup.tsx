@@ -55,6 +55,7 @@ const SignUp = () => {
                 className='ml-2 flex-1'
                 textContentType='givenName'
                 value={firstName}
+                autoCapitalize='words'
                 onChangeText={(text) => setFirstName(text.replace(/[^a-zA-Z-\s]/g, ''))}
                 maxLength={30}
               />
@@ -64,12 +65,13 @@ const SignUp = () => {
             <View className='flex flex-row items-center p-3 rounded-full border border-gray-500 mb-4'>
               <MaterialIcons name='person' size={20} color='#888' />
               <TextInput 
+              
                placeholderTextColor="#BBB"
                 placeholder='Enter your last name' 
                 className='ml-2 flex-1'
                 value={lastName}
+                autoCapitalize='words'
                 onChangeText={(text) => setLastName(text.replace(/[^a-zA-Z-\s]/g, ''))}
-                maxLength={30}
               />
             </View>
 
