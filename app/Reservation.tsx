@@ -7,11 +7,10 @@ import { useAuth } from '@/context/AuthContext';
 import { useStripe } from '@stripe/stripe-react-native';
 import { router } from 'expo-router';
 
-
 //components
 import AmenitiesList from '@/components/AmenitiesList';
 import TotalPriceDisplay from '@/components/TotalPrice';
-import RoomList from '@/components/RoomList'
+import RoomList from '@/components/RoomList';
 import BookingButton from '@/components/BookingButton';
 import DatePicker from '@/components/DatePicker';
 
@@ -53,11 +52,25 @@ const Reservation = () => {
     }
   };
 
+  // Helper function to check for date conflicts
+  const isDateConflict = (checkIn: Date, checkOut: Date) => {
+    return bookedDates.some(({ start, end }) =>
+      (checkIn <= end && checkOut >= start)
+    );
+  };
+
   const handleCheckInChange = (date: Date) => {
     if (checkOutDate && date >= checkOutDate) {
-      Alert.alert('Error', 'Check-in date must be before the check-out date.');
+      Alert.alert('Booking Message', 'Check-in date must be before the check-out date.');
       return;
     }
+
+    // Check for conflict
+    if (checkOutDate && isDateConflict(date, checkOutDate)) {
+      Alert.alert('Booking Message', 'Some selected dates are not available. Please choose different dates.');
+      return;
+    }
+
     setCheckInDate(date);
     if (date && checkOutDate) {
       calculateTotalPrice(date, checkOutDate);
@@ -66,9 +79,16 @@ const Reservation = () => {
 
   const handleCheckOutChange = (date: Date) => {
     if (checkInDate && date <= checkInDate) {
-      Alert.alert('Error', 'The check-out date must be after the check-in date.');
+      Alert.alert('Booking Message', 'The check-out date must be after the check-in date.');
       return;
     }
+
+    // Check for conflict
+    if (checkInDate && isDateConflict(checkInDate, date)) {
+      Alert.alert('Booking Message', 'The selected dates are not available. Please choose different dates.');
+      return;
+    }
+
     setCheckOutDate(date);
     if (checkInDate) {
       calculateTotalPrice(checkInDate, date);
@@ -77,7 +97,7 @@ const Reservation = () => {
 
   const fetchPaymentSheetParams = async () => {
     const response = await axiosConfig.post('/create-charge', {
-      amount: totalPrice, // in peso
+      amount: totalPrice,
     });
 
     const { client_secret } = response.data;
@@ -85,18 +105,8 @@ const Reservation = () => {
   };
 
   const initializePaymentSheet = async () => {
-    if(!checkInDate){
-      Alert.alert('Please select a checkIn date!')
-      return;
-    }
-    if(!checkOutDate){
-      Alert.alert('Please select a checkOut date!')
-      return;
-    }
-     // Start loading
-    if(!checkInDate && !checkOutDate) {
-      Alert.alert('Booking Message', 'Please Select a date!')
-      setPaymentLoading(false);
+    if (!checkInDate || !checkOutDate) {
+      Alert.alert('Booking Message', 'Please select both check-in and check-out dates!');
       return;
     }
 
@@ -114,76 +124,68 @@ const Reservation = () => {
         Alert.alert('Error', error.message);
       }
     } finally {
-      setPaymentLoading(false); // Stop loading
+      setPaymentLoading(false);
     }
   };
 
   const openPaymentSheet = async () => {
     try {
       const { error } = await presentPaymentSheet();
-  
+
       if (error) {
         Alert.alert('Booking Cancelled', error.message);
-        return; // cancel if error
+        return;
       }
-  
-      //check if defined
+
       if (!checkInDate || !checkOutDate || !totalPrice) {
         Alert.alert('Error', 'Reservation details are incomplete. Please check your dates and total price.');
-        return; 
+        return;
       }
-  
-   
-      
-      //makereservation logic made in other file
+
       await makeReservation(
         roomId,
         totalPrice,
         checkInDate.toISOString().split('T')[0],
         checkOutDate.toISOString().split('T')[0]
       );
-      router.push('/Successful')
-      
+      router.push('/Successful');
     } catch (error) {
-      // Handle errors
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
-      console.error(error); // Log the error for debugging purposes
+      console.error(error);
     }
   };
-  
 
   useEffect(() => {
     fetchRoomDetails();
   }, []);
 
   return (
-    <View className='flex-1 bg-white'>
-       <ScrollView className="">
-      <StatusBar barStyle="dark-content" />
-      {loading ? (
-        <ActivityIndicator size='large' color="#15A86D" className='mt-96 '/>
-      ) : (
-        room && (
-          <View>
-            <RoomList room={room} />
-            <DatePicker 
-              checkInDate={checkInDate} 
-              checkOutDate={checkOutDate} 
-              handleCheckInChange={handleCheckInChange} 
-              handleCheckOutChange={handleCheckOutChange} 
-              bookedDates={bookedDates} 
-            />
-            <AmenitiesList />
-            <View className=''>
-              <TotalPriceDisplay totalPrice={totalPrice} />
-              <BookingButton onPress={initializePaymentSheet} loading={paymentLoading} />
+    <View className="flex-1 bg-white">
+      <ScrollView>
+        <StatusBar barStyle="dark-content" />
+        {loading ? (
+          <ActivityIndicator size="large" color="#15A86D" className="mt-96" />
+        ) : (
+          room && (
+            <View>
+              <RoomList room={room} />
+              <DatePicker
+                checkInDate={checkInDate}
+                checkOutDate={checkOutDate}
+                handleCheckInChange={handleCheckInChange}
+                handleCheckOutChange={handleCheckOutChange}
+                bookedDates={bookedDates}
+              />
+              <AmenitiesList />
+              <View>
+                <TotalPriceDisplay totalPrice={totalPrice} />
+                <BookingButton onPress={initializePaymentSheet} loading={paymentLoading} />
+              </View>
             </View>
-          </View>
-        )
-      )}
-    </ScrollView>
+          )
+        )}
+      </ScrollView>
     </View>
-   
   );
 };
 

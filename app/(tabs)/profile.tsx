@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -7,9 +7,19 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { router } from 'expo-router';
 
 const Profile = () => {
-  const { signOut, user } = useAuth();
+  const { signOut, user, isLoading } = useAuth();
   const Logout = () => {
     signOut();
+  };
+
+  const [disabled, setDisabled] = useState(false);
+
+  const handleNavigation = (route: any) => {
+    if (!disabled) {
+      setDisabled(true);
+      router.push(route);
+      setTimeout(() => setDisabled(false), 1000); // Re-enable after 1 second
+    }
   };
 
   return (
@@ -19,7 +29,7 @@ const Profile = () => {
           <View className="flex items-center p-4">
             {user ? (
               <>
-                <TouchableOpacity onPress={() => router.push('/(updateProfile)/update-profile')} className="relative">
+                <TouchableOpacity onPress={() => handleNavigation('/(updateProfile)/update-profile')} className="relative">
                   <Image
                     source={{ uri: user.profile }}
                     className="w-32 h-32 rounded-full border-2"
@@ -29,7 +39,7 @@ const Profile = () => {
 
                 
                   <TouchableOpacity
-                    onPress={() => router.push('/(updateProfile)/update-profile')}
+                    onPress={() => handleNavigation('/(updateProfile)/update-profile')}
                     style={{
                       position: 'absolute',
                       right: 5,
@@ -58,7 +68,7 @@ const Profile = () => {
               Support
             </Text>
             <TouchableOpacity 
-              onPress={() => router.push('/(hotel-haven-terms)/faq')} 
+              onPress={() => handleNavigation('/(hotel-haven-terms)/faq')} 
               className="mt-4" 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
@@ -70,7 +80,7 @@ const Profile = () => {
               Information
             </Text>
             <TouchableOpacity 
-              onPress={() => router.push('/(hotel-haven-terms)/About')} 
+              onPress={() => handleNavigation('/(hotel-haven-terms)/About')} 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
               <MaterialCommunityIcons name="information" size={22} color="black" style={{ marginLeft: 5 }} />
@@ -78,7 +88,7 @@ const Profile = () => {
               <AntDesign name="right" size={18} color="black" style={{ marginLeft: 'auto' }} />
             </TouchableOpacity>
             <TouchableOpacity 
-              onPress={() => router.push('/(hotel-haven-terms)/privacy')} 
+              onPress={() => handleNavigation('/(hotel-haven-terms)/privacy')} 
               className="mt-4" 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
@@ -87,7 +97,7 @@ const Profile = () => {
               <AntDesign name="right" size={18} color="black" style={{ marginLeft: 'auto' }} />
             </TouchableOpacity>
             <TouchableOpacity 
-              onPress={() => router.push('/(hotel-haven-terms)/terms')} 
+              onPress={() => handleNavigation('/(hotel-haven-terms)/terms')} 
               className="mt-4" 
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
