@@ -6,6 +6,7 @@ import CustomModal from '@/components/CustomModal'; // Import CustomModal compon
 import { AuthContextType, User } from '@/types/type';
 import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
+import {Alert} from 'react-native';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -123,16 +124,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signOut = async () => {
     setIsLoading(true);
     setError(null);
-    try {
-      await SecureStore.deleteItemAsync('user');
-      setUser(null);
-      router.replace('/(auth)/Login');
-    } catch (error: any) {
-      handleRequestError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+
+    Alert.alert(
+      'Log Out',
+      'Are You Sure?',
+      [
+        {
+          text: 'No',
+          style:'cancel',
+        },
+
+        {
+          text:'Yes',
+          onPress: async () => {
+            try {
+              await SecureStore.deleteItemAsync('user');
+              setUser(null);
+              router.replace('/(auth)/Login');
+            } catch (error: any) {
+              handleRequestError(error);
+            } finally {
+              setIsLoading(false);
+            }
+          }
+          }
+        ]
+    )}
+    
+   
+
 
   const makeReservation = async (roomId: number, totalPrice: number, checkIn: string, checkOut: string) => {
     setIsLoading(true);
