@@ -122,7 +122,7 @@ const RoomList = () => {
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }} />
         </TouchableWithoutFeedback>
-        <View className="absolute bg-white rounded-2xl p-5 shadow-lg" style={{ top: 130, right: 15, width: 200 }}>
+        <View className="absolute bg-white rounded-2xl p-5 shadow-lg" style={{ top: 100, right: 15, width: 200 }}>
           <Text className="font-pbold text-md mb-1">Filter by Room Type</Text>
           {['single', 'double', 'suite'].map((type) => (
             <TouchableOpacity key={type} onPress={() => handleFilterPress(type)} className="py-1 border-b border-gray-300 flex-row items-center">

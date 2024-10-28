@@ -44,6 +44,7 @@ import { TextInputProps, TouchableOpacityProps } from "react-native";
     ) => Promise<any[]>; // Return type should be a promise of an array
     isLoading: boolean;
     error: string | null;
+    signUpError: string | null;
     updateProfile: (
         firstName: string,
         lastName: string,

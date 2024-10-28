@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [signUpError, setSignUpError] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>('');
   const [modalType, setModalType] = useState<'success' | 'error'>('success');
@@ -43,6 +44,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } else {
       console.log('Error message:', error.message);
       setError('An unexpected error occurred. Please try again.');
+    }
+  };
+
+  const handleSignUpError = (error: any) => {
+    if (error.response) {
+      console.log('Error response:', error?.response.data.message[0]);
+      setSignUpError(error?.response.data.message || 'An error occurred. Please try again.');
+    } else if (error.request) {
+      console.log('Error request:', error.request);
+      setSignUpError('No response received from the server. Please try again.');
+    } else {
+      console.log('Error message:', error.message);
+      setSignUpError('An unexpected error occurred. Please try again.');
     }
   };
 
@@ -82,10 +96,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setModalType('success');
           setIsModalVisible(true);
           router.push('/(auth)/Login');
-          setError(null);
+          setSignUpError(null);
         })
         .catch((error) => {
-          handleRequestError(error);
+          handleSignUpError(error);
         })
         .finally(() => {
           setIsLoading(false);
@@ -280,7 +294,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
   return (
-      <AuthContext.Provider value={{ user, signIn, signOut, signUp, makeReservation, getUserTransactions, updateProfile, isLoading, error }}>
+      <AuthContext.Provider value={{ user, signIn, signOut, signUp, makeReservation, getUserTransactions, updateProfile, isLoading, error, signUpError }}>
         {children}
         <CustomModal visible={isModalVisible} message={modalMessage} type={modalType} onClose={handleModalClose} />
       </AuthContext.Provider>

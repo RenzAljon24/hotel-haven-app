@@ -98,7 +98,7 @@ const CustomCalendarPicker: React.FC<CustomCalendarPickerProps> = ({
                                 textSectionTitleDisabledColor: '#d9e1e8',
                                 selectedDayBackgroundColor: '#15A86D',
                                 selectedDayTextColor: '#ffffff',
-                                todayTextColor: '#15A86D',
+                                todayTextColor: '#2d4150',
                                 dayTextColor: '#2d4150',
                                 textDisabledColor: '#d9e1e8',
                                 dotColor: '#15A86D',

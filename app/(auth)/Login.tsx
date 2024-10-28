@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { images } from '@/constants';
+
 import { Link } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import { useAuth } from '@/context/AuthContext';
 import { MaterialIcons, Feather } from '@expo/vector-icons';
 
@@ -10,8 +12,31 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = () => {
+  
+  useEffect(() => {
+    const loadCredentials = async () => {
+      const savedEmail = await SecureStore.getItemAsync('email');
+      const savedPassword = await SecureStore.getItemAsync('password');
+      if (savedEmail && savedPassword) {
+        setEmail(savedEmail);
+        setPassword(savedPassword);
+        setRememberMe(true);
+      }
+    };
+    loadCredentials();
+  }, []);
+
+
+  const handleLogin = async () => {
+    if (rememberMe) {
+      await SecureStore.setItemAsync('email', email);
+      await SecureStore.setItemAsync('password', password);
+    } else {
+      await SecureStore.deleteItemAsync('email');
+      await SecureStore.deleteItemAsync('password');
+    }
     signIn(email, password);
   };
 
@@ -65,10 +90,18 @@ const Login = () => {
             {error && <Text className='text-red-700'>{error}</Text>}
           </View>
 
-          {/* Forgot Password Link */}
-          <Text className='text-blue-600 pt-1 pl-48 font-psemibold'style={{fontSize: 12, marginLeft: 15}}>
-            Forgot your password?
-          </Text>
+
+           {/* Remember Me Checkbox using TouchableOpacity */}
+          <View className='flex flex-row mb-4 mr-48'>
+            <TouchableOpacity onPress={() => setRememberMe(!rememberMe)} style={{ marginRight: 8 }}>
+              {rememberMe ? (
+                <MaterialIcons name="check-box" size={24} color="green" />
+              ) : (
+                <MaterialIcons name="check-box-outline-blank" size={24} color="gray" />
+              )}
+            </TouchableOpacity>
+            <Text className='font-pregular mt-1'>Remember Me</Text>
+          </View>
 
           {/* Login Button and Other Links */}
           <View className='w-80 text-center mt-10'>

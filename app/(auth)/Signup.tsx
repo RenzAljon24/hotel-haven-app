@@ -6,7 +6,7 @@ import { Link } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 
 const SignUp = () => {
-  const { signUp, error, isLoading } = useAuth();
+  const { signUp, signUpError, isLoading } = useAuth();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -124,7 +124,7 @@ const SignUp = () => {
               </TouchableOpacity>
             </View>
 
-            {error && <Text className='text-red-700 mt-4'>{error}</Text>}
+            {signUpError && <Text className='text-red-700 mt-4'>{signUpError}</Text>}
           </View>
 
           {/* Sign Up Button and Links */}
