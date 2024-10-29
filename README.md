@@ -63,6 +63,20 @@ If you’d like to contribute, please follow these steps:
 
 ---
 
+## Team
+
+This project is a collaboration among:
+
+- [**Renz Aljon Cruz**](https://github.com/RenzAljon24) -   Lead Developer
+- [**Xyzhie Dacanay**](https://github.com/Xyzhie-Dacanay) - Project Lead
+- [**Kristian Narvas**](https://github.com/Narvaskristian08) - Assistant Developer
+- [**Terrence Lopez**](https://github.com/Awzurency) - UI/UX Designer
+- [**Clark Rivo**](https://github.com/Clark178) - QA Tester
+- [**Abby Bauzon**](https://github.com/AbbyCamille) - Documentator
+
+We appreciate everyone’s hard work and dedication to making Hotel Haven a success!
+
+
 ## License
 
 This project is licensed under the MIT License.
