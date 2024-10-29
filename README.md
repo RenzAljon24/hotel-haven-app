@@ -50,6 +50,10 @@ Hotel Haven aims to simplify hotel bookings with flexible payment options, inclu
 - **Admin Panel:** Allow admins to update room availability, adjust prices, and manage hotel details.
 
 ---
+## Server Repository
+The Laravel backend for this application can be found here on [**Github**](https://github.com/RenzAljon24/hotel-service).
+
+---
 
 ## Contribution Guide
 
