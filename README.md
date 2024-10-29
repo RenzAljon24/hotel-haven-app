@@ -1,50 +1,73 @@
-# Welcome to your Expo app 👋
+# Welcome to Hotel Haven 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Hotel Haven** is a cross-platform mobile hotel room reservation system, crafted to make booking accommodations simple, fast, and secure.
 
-## Get started
+## Get Started
 
-1. Install dependencies
+1. **Install Dependencies**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. **Run the App**
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Project Overview
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Hotel Haven aims to simplify hotel bookings with flexible payment options, including secure online transactions. Users can search for available rooms, receive tailored suggestions, and make reservations seamlessly, ensuring a smooth booking experience and a comfortable stay.
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## Objectives
 
-```bash
-npm run reset-project
-```
+### User Interface Enhancements
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- Develop an intuitive interface for effortless navigation and streamlined bookings.
+- Simplify the search and reservation process to maximize user experience.
 
-## Learn more
+### Secure Payment System
 
-To learn more about developing your project with Expo, look at the following resources:
+- Integrate a secure payment gateway with encrypted storage for safeguarding user data during transactions.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Focus on Customer Satisfaction
 
-## Join the community
+- Deliver a user-friendly booking experience to ensure high customer satisfaction.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Key Features
+
+- **User Authentication:** Register and log in securely using email and password.
+- **Profile Management:** Update personal information, payment methods, and security settings.
+- **Search & Filters:** Find rooms based on location, price, and amenities, catering to both solo and group stays.
+- **Payment Processing:** Pay securely with cards or online payments, with full data encryption.
+- **Admin Panel:** Allow admins to update room availability, adjust prices, and manage hotel details.
+
+---
+
+## Contribution Guide
+
+If you’d like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch with your feature or fix: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/YourFeature`
+5. Open a Pull Request.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Enjoy booking with Hotel Haven and happy travels! 🌍
+
